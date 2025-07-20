@@ -87,7 +87,7 @@ describe('PurchaseBasketComponent', () => {
   it('should load user email when being created', () => {
     userService.whoAmI.and.returnValue(of({ email: 'a@a' }))
     component.ngOnInit()
-    expect(component.userEmail).toBe('(a@a)')
+    expect(component.userEmail()).toBe('(a@a)')
   })
 
   it('should log an error if userService fails to fetch the user', fakeAsync(() => {
@@ -100,43 +100,43 @@ describe('PurchaseBasketComponent', () => {
   it('should hold products returned by backend API', () => {
     basketService.find.and.returnValue(of({ Products: [{ name: 'Product1', price: 1, deluxePrice: 1, BasketItem: { quantity: 1 } }, { name: 'Product2', price: 2, deluxePrice: 2, BasketItem: { quantity: 2 } }] }))
     component.load()
-    expect(component.dataSource.length).toBe(2)
-    expect(component.dataSource[0].name).toBe('Product1')
-    expect(component.dataSource[0].price).toBe(1)
-    expect(component.dataSource[0].BasketItem.quantity).toBe(1)
-    expect(component.dataSource[1].name).toBe('Product2')
-    expect(component.dataSource[1].price).toBe(2)
-    expect(component.dataSource[1].BasketItem.quantity).toBe(2)
+    expect(component.dataSource().length).toBe(2)
+    expect(component.dataSource()[0].name).toBe('Product1')
+    expect(component.dataSource()[0].price).toBe(1)
+    expect(component.dataSource()[0].BasketItem.quantity).toBe(1)
+    expect(component.dataSource()[1].name).toBe('Product2')
+    expect(component.dataSource()[1].price).toBe(2)
+    expect(component.dataSource()[1].BasketItem.quantity).toBe(2)
   })
 
   it('should have price equal to deluxePrice for deluxe users', () => {
     deluxeGuard.isDeluxe.and.returnValue(true)
     basketService.find.and.returnValue(of({ Products: [{ name: 'Product1', price: 2, deluxePrice: 1, BasketItem: { quantity: 1 } }] }))
     component.load()
-    expect(component.dataSource.length).toBe(1)
-    expect(component.dataSource[0].name).toBe('Product1')
-    expect(component.dataSource[0].price).toBe(1)
+    expect(component.dataSource().length).toBe(1)
+    expect(component.dataSource()[0].name).toBe('Product1')
+    expect(component.dataSource()[0].price).toBe(1)
   })
 
   it('should have price different from deluxePrice for non-deluxe users', () => {
     deluxeGuard.isDeluxe.and.returnValue(false)
     basketService.find.and.returnValue(of({ Products: [{ name: 'Product1', price: 2, deluxePrice: 1, BasketItem: { quantity: 1 } }] }))
     component.load()
-    expect(component.dataSource.length).toBe(1)
-    expect(component.dataSource[0].name).toBe('Product1')
-    expect(component.dataSource[0].price).toBe(2)
+    expect(component.dataSource().length).toBe(1)
+    expect(component.dataSource()[0].name).toBe('Product1')
+    expect(component.dataSource()[0].price).toBe(2)
   })
 
   it('should hold no products on error in backend API', fakeAsync(() => {
     basketService.find.and.returnValue(throwError('Error'))
     component.load()
-    expect(component.dataSource.length).toBe(0)
+    expect(component.dataSource().length).toBe(0)
   }))
 
   it('should hold no products when none are returned by backend API', () => {
     basketService.find.and.returnValue(of({ Products: [] }))
     component.load()
-    expect(component.dataSource).toEqual([])
+    expect(component.dataSource()).toEqual([])
   })
 
   it('should log error while getting Products from backend API directly to browser console', fakeAsync(() => {
@@ -154,13 +154,13 @@ describe('PurchaseBasketComponent', () => {
   it('should load again after deleting a basket item', () => {
     basketService.find.and.returnValue(of({ Products: [{ name: 'Product1', price: 1, deluxePrice: 1, BasketItem: { quantity: 1 } }, { name: 'Product2', price: 2, deluxePrice: 2, BasketItem: { quantity: 2 } }] }))
     component.delete(1)
-    expect(component.dataSource.length).toBe(2)
-    expect(component.dataSource[0].name).toBe('Product1')
-    expect(component.dataSource[0].price).toBe(1)
-    expect(component.dataSource[0].BasketItem.quantity).toBe(1)
-    expect(component.dataSource[1].name).toBe('Product2')
-    expect(component.dataSource[1].price).toBe(2)
-    expect(component.dataSource[1].BasketItem.quantity).toBe(2)
+    expect(component.dataSource().length).toBe(2)
+    expect(component.dataSource()[0].name).toBe('Product1')
+    expect(component.dataSource()[0].price).toBe(1)
+    expect(component.dataSource()[0].BasketItem.quantity).toBe(1)
+    expect(component.dataSource()[1].name).toBe('Product2')
+    expect(component.dataSource()[1].price).toBe(2)
+    expect(component.dataSource()[1].BasketItem.quantity).toBe(2)
   })
 
   it('should log error while deleting basket item directly to browser console', fakeAsync(() => {
