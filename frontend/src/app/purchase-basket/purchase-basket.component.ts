@@ -41,7 +41,7 @@ export class PurchaseBasketComponent implements OnInit, OnDestroy {
   public itemTotal = signal<number>(0)
   public userEmail = signal<string>('')
 
-  private subscriptions: Subscription[] = []
+  private readonly subscriptions: Subscription[] = []
 
   constructor (
     private readonly deluxeGuard: DeluxeGuard,
