@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { Component, NgZone, type OnInit } from '@angular/core'
+import { Component, NgZone, type OnDestroy, type OnInit } from '@angular/core'
 import { DeliveryService } from '../Services/delivery.service'
 import { AddressService } from '../Services/address.service'
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
@@ -21,6 +21,7 @@ import { FlexModule } from '@angular/flex-layout/flex'
 import { MatDivider } from '@angular/material/divider'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatCardModule } from '@angular/material/card'
+import type { Subscription } from 'rxjs'
 
 library.add(faRocket, faShippingFast, faTruck)
 
@@ -30,27 +31,38 @@ library.add(faRocket, faShippingFast, faTruck)
   styleUrls: ['./delivery-method.component.scss'],
   imports: [MatCardModule, NgIf, TranslateModule, MatDivider, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, FlexModule, MatCellDef, MatCell, MatRadioButton, NgClass, ExtendedModule, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatButtonModule, MatIconModule]
 })
-export class DeliveryMethodComponent implements OnInit {
+export class DeliveryMethodComponent implements OnInit, OnDestroy {
   public displayedColumns = ['Selection', 'Name', 'Price', 'ETA']
   public methods: DeliveryMethod[]
   public address: any
   public dataSource
   public deliveryMethodId: number = undefined
   selection = new SelectionModel<DeliveryMethod>(false, [])
+  private readonly subscriptions: Subscription[] = []
 
   constructor (private readonly location: Location, private readonly deliverySerivce: DeliveryService,
     private readonly addressService: AddressService, private readonly router: Router, private readonly ngZone: NgZone) { }
 
   ngOnInit (): void {
-    this.addressService.getById(sessionStorage.getItem('addressId')).subscribe((address) => {
-      this.address = address
-    }, (error) => { console.log(error) })
+    this.addressService.getById(sessionStorage.getItem('addressId')).subscribe({
+      next: (address) => {
+        this.address = address
+      },
+      error: (error) => { console.log(error) }
+    })
 
-    this.deliverySerivce.get().subscribe((methods) => {
-      console.log(methods)
-      this.methods = methods
-      this.dataSource = new MatTableDataSource<DeliveryMethod>(this.methods)
-    }, (error) => { console.log(error) })
+    this.deliverySerivce.get().subscribe({
+      next: (methods) => {
+        console.log(methods)
+        this.methods = methods
+        this.dataSource = new MatTableDataSource<DeliveryMethod>(this.methods)
+      },
+      error: (error) => { console.log(error) }
+    })
+  }
+
+  ngOnDestroy (): void {
+    this.subscriptions.forEach(sub => sub.unsubscribe())
   }
 
   selectMethod (id) {
