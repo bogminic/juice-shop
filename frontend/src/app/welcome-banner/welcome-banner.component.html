@@ -6,8 +6,8 @@
 <h1>{{title}}</h1>
 <div class="text-justify" [innerHtml]="message"></div>
 <div class="button-footer">
+  @if (showHackingInstructor) {
   <button
-    *ngIf="showHackingInstructor"
     mat-raised-button color="warn"
     (click)="startHackingInstructor()"
     [matTooltip]="('SCORE_BOARD_HACKING_INSTRUCTOR' | translate)"
@@ -17,12 +17,14 @@
     </mat-icon>
     <span fxShow fxHide.lt-lg>{{"BTN_GETTING_STARTED" | translate}}</span>
   </button>
+}
+  @if (showDismissBtn) {
   <button mat-raised-button class="close-dialog" (click)="closeWelcome()" color="primary"
-          *ngIf="showDismissBtn"
           aria-label="Close Welcome Banner">
     <mat-icon>
       visibility_off
     </mat-icon>
     <span fxShow fxHide.lt-sm>{{"BTN_DISMISS" | translate }}</span>
   </button>
+}
 </div>

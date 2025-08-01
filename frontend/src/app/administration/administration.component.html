@@ -15,21 +15,21 @@
           <ng-container matColumnDef="user">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let user" style="vertical-align: middle">
-              <i *ngIf="doesUserHaveAnActiveSession(user)" class="fas fa-user fa-lg confirmation"></i>
+              <i @if (doesUserHaveAnActiveSession(user)) { class="fas fa-user fa-lg confirmation"></i>
             </mat-cell>
-          </ng-container>
+          </div>
 
           <ng-container matColumnDef="email">
             <mat-header-cell *matHeaderCellDef translate></mat-header-cell>
             <mat-cell *matCellDef="let user" [innerHTML]="user.email" style="vertical-align: middle"></mat-cell>
-          </ng-container>
+          </div>
 
           <ng-container matColumnDef="user_detail">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let user">
               <button mat-button (click)="showUserDetail(user.id)"><i class="fas fa-eye"></i></button>
             </mat-cell>
-          </ng-container>
+          </div>
 
           <mat-header-row *matHeaderRowDef="userColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: userColumns; "></mat-row>
@@ -50,30 +50,30 @@
           <ng-container matColumnDef="user">
             <mat-header-cell *matHeaderCellDef translate></mat-header-cell>
             <mat-cell *matCellDef="let feedback"> {{feedback.UserId}}</mat-cell>
-          </ng-container>
+          </div>
 
           <ng-container matColumnDef="comment">
             <mat-header-cell *matHeaderCellDef translate></mat-header-cell>
             <mat-cell *matCellDef="let feedback" (click)="showFeedbackDetails(feedback.comment, feedback.UserId)">
               <p [innerHTML]="feedback.comment" matTooltip="Click for more information" matTooltipPosition="above"></p>
             </mat-cell>
-          </ng-container>
+          </div>
 
           <ng-container matColumnDef="rating">
             <mat-header-cell *matHeaderCellDef translate></mat-header-cell>
             <mat-cell *matCellDef="let feedback">
-              <mat-icon *ngFor="let i of times(feedback.rating)">
+              <mat-icon @for (i of times(feedback.rating); track i) {>
                 star_rate
               </mat-icon>
             </mat-cell>
-          </ng-container>
+          </div>
 
           <ng-container matColumnDef="remove">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let feedback">
               <button mat-button (click)="deleteFeedback(feedback.id)"><i class="fas fa-trash-alt"></i></button>
             </mat-cell>
-          </ng-container>
+          </div>
 
           <mat-header-row *matHeaderRowDef="feedbackColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: feedbackColumns;"></mat-row>
@@ -94,19 +94,19 @@
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let user" style="vertical-align: middle">
     </mat-cell>
-  </ng-container>
+  </div>
 
   <ng-container matColumnDef="email">
     <mat-header-cell *matHeaderCellDef translate></mat-header-cell>
     <mat-cell *matCellDef="let user" [innerHTML]="user.email" style="vertical-align: middle"></mat-cell>
-  </ng-container>
+  </div>
 
   <ng-container matColumnDef="user_detail">
     <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let user">
       <button mat-button (click)="showUserDetail(user.id)"><i class="fas fa-eye"></i></button>
     </mat-cell>
-  </ng-container>
+  </div>
 
   <mat-header-row *matHeaderRowDef="userColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: userColumns; "></mat-row>

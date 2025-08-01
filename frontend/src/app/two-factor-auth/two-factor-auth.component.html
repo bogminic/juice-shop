@@ -8,8 +8,8 @@
     <div class="mdc-card">
 
       <h1 id="2fa-setup-title" translate>TITLE_TWO_FACTOR_AUTH_CONFIG</h1>
-
-      <div id="2fa-setup-successfully" *ngIf="setupStatus === true">
+@if (setupStatus === true) {
+      <div id="2fa-setup-successfully" >
         <p translate>2FA_SUCCESSFUL_SETUP</p>
 
         <form
@@ -44,9 +44,10 @@
           </button>
         </form>
       </div>
+    }
 
+      @if (setupStatus === false) {
       <form
-        *ngIf="setupStatus === false"
         class="form-container"
         id="two-factor-auth-setup"
         [formGroup]="twoFactorSetupForm"
@@ -107,6 +108,7 @@
           {{'BTN_SAVE' | translate}}
         </button>
       </form>
+    }
     </div>
   </mat-card>
 </div>

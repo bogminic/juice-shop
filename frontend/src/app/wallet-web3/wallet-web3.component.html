@@ -12,8 +12,10 @@
           <mat-icon>
             account_balance_wallet
           </mat-icon>
-          <span *ngIf="!session">{{"BTN_CONNECT_METAMASK" | translate}}</span>
-          <span *ngIf="session"
+          @if (!session) {
+            <span>{{"BTN_CONNECT_METAMASK" | translate}}</span>
+          }
+          <span @if (session) {
             >{{ userData.address.substring(0, 6) }}...{{
               userData.address.slice(-6)
             }}</span

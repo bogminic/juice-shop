@@ -5,7 +5,7 @@
 
 <div fxLayout="column" fxLayoutGap="20px">
   <h1>{{"MY_PAYMENT_OPTIONS" | translate}}</h1>
-  <div *ngIf="cardsExist">
+  <div @if (cardsExist) {>
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="Selection">
         <mat-header-cell *matHeaderCellDef fxFlex="15%"></mat-header-cell>
@@ -50,7 +50,7 @@
         <mat-form-field appearance="outline" color="accent">
           <mat-label translate>LABEL_NAME</mat-label>
           <input [formControl]="nameControl" type="text" matInput>
-          <mat-error *ngIf="nameControl.invalid && nameControl.errors.required" translate>
+          <mat-error @if (nameControl.invalid && nameControl.errors.required) { translate>
             MANDATORY_NAME
           </mat-error>
         </mat-form-field>
@@ -58,28 +58,28 @@
           <mat-label translate>LABEL_CARD_NUMBER</mat-label>
           <input #cardIn [formControl]="numberControl" type="number" matInput>
           <mat-hint align="end">{{cardIn .value?.length || 0}}/16</mat-hint>
-          <mat-error *ngIf="numberControl.invalid && numberControl.errors.required" translate>
+          <mat-error @if (numberControl.invalid && numberControl.errors.required) { translate>
             MANDATORY_CARD_NUMBER
           </mat-error>
-          <mat-error *ngIf="numberControl.invalid && (numberControl.errors.min || numberControl.errors.max)" translate>
+          <mat-error @if (numberControl.invalid && (numberControl.errors.min || numberControl.errors.max)) { translate>
             VALID_CARD_NUMBER
           </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 45%;margin-right: 10%;" appearance="outline" color="accent">
           <mat-label translate>LABEL_EXPIRY_MONTH</mat-label>
           <select matNativeControl [formControl]="monthControl" required>
-            <option *ngFor="let i of monthRange" value="{{ i }}">{{ i }}</option>
+            <option @for (i of monthRange; track i) { value="{{ i }}">{{ i }}</option>
           </select>
-          <mat-error *ngIf="monthControl.invalid && monthControl.errors.required" translate>
+          <mat-error @if (monthControl.invalid && monthControl.errors.required) { translate>
             MANDATORY_EXPIRY_MONTH
           </mat-error>
         </mat-form-field>
         <mat-form-field style="width: 45%" appearance="outline" color="accent">
           <mat-label translate>LABEL_EXPIRY_YEAR</mat-label>
           <select matNativeControl [formControl]="yearControl" required>
-            <option *ngFor="let i of yearRange" value="{{ i }}">{{ i }}</option>
+            <option @for (i of yearRange; track i) { value="{{ i }}">{{ i }}</option>
           </select>
-          <mat-error *ngIf="yearControl.invalid && yearControl.errors.required" translate>
+          <mat-error @if (yearControl.invalid && yearControl.errors.required) { translate>
             MANDATORY_EXPIRY_YEAR
           </mat-error>
         </mat-form-field>

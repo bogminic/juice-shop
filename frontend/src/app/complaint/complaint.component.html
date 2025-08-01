@@ -11,12 +11,16 @@
 
       <div class="confirmation" [hidden]="!(confirmation && !messageControl.dirty)">{{ confirmation }}</div>
 
-      <div class="error fileUploadError" *ngIf="(fileUploadError && fileUploadError.name == 'mimeType')">{{
-        "INVALID_FILE_TYPE" | translate: { type: 'PDF, ZIP' } }}
-      </div>
-      <div class="error fileUploadError" *ngIf="(fileUploadError && fileUploadError.name == 'fileSize')">{{
-        "INVALID_FILE_SIZE" | translate: { size: '100 KB' } }}
-      </div>
+      @if (fileUploadError && fileUploadError.name == 'mimeType') {
+        <div class="error fileUploadError">{{
+          "INVALID_FILE_TYPE" | translate: { type: 'PDF, ZIP' } }}
+        </div>
+      }
+      @if (fileUploadError && fileUploadError.name == 'fileSize') {
+        <div class="error fileUploadError">{{
+          "INVALID_FILE_SIZE" | translate: { size: '100 KB' } }}
+        </div>
+      }
 
       <div class="form-container" id="complaint-form">
 
@@ -35,7 +39,7 @@
                     matTextareaAutosize cols="50" maxlength="160" matInput
                     placeholder="{{ 'WRITE_MESSAGE_PLACEHOLDER' | translate}}"
                     aria-label="Field for entering the complaint"></textarea>
-          <mat-error *ngIf="messageControl.invalid && messageControl?.errors.required">{{"MANDATORY_MESSAGE" |
+          <mat-error @if (messageControl.invalid && messageControl?.errors.required) {>{{"MANDATORY_MESSAGE" |
             translate}}
           </mat-error>
           <mat-hint align="end">{{complaintMessage.value?.length || 0}}/160</mat-hint>

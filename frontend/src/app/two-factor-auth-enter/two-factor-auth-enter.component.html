@@ -11,7 +11,9 @@
 
       <p translate>TITLE_TWO_FACTOR_AUTH_ENTER</p>
 
-      <div *ngIf="errored" class="error" style="margin-bottom: 10px;" translate>INVALID_TWO_FACTOR_AUTH_TOKEN</div>
+      @if (errored) {
+        <div class="error" style="margin-bottom: 10px;" translate>INVALID_TWO_FACTOR_AUTH_TOKEN</div>
+      }
 
       <form (ngSubmit)="verify()" [formGroup]="twoFactorForm">
 

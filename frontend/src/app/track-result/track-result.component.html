@@ -11,20 +11,36 @@
       <h3 translate>LABEL_EXPECTED_DELIVERY</h3>
       <div class="container-fluid well">
         <div class="row fa-4x">
-          <span *ngIf="status === Status.New"><i class="fas fa-warehouse confirmation"></i></span>
-          <span *ngIf="status !== Status.New"><i class="fas fa-warehouse"></i></span>
-          <span *ngIf="status === Status.Packing"><i class="fas fa-truck-loading confirmation"></i></span>
-          <span *ngIf="status !== Status.Packing"><i class="fas fa-truck-loading"></i></span>
-          <span *ngIf="status === Status.Transit"><i class="fas fa-truck confirmation"></i></span>
-          <span *ngIf="status !== Status.Transit"><i class="fas fa-truck"></i></span>
-          <span class="fa-layers fa-fw" *ngIf="status === Status.Delivered">
-            <span><i class="fas fa-home confirmation"></i></span>
-            <span class="fa-layers-counter accent-notification" style="width: max-content">{{results.eta}} {{'LABEL_DAYS' | translate}}</span>
-          </span>
-          <span class="fa-layers fa-fw" *ngIf="status !== Status.Delivered">
-            <span><i class="fas fa-home"></i></span>
-            <span class="fa-layers-counter accent-notification" style="width: max-content">{{results.eta}} {{'LABEL_DAYS' | translate}}</span>
-          </span>
+          @if (status === Status.New) {
+            <span><i class="fas fa-warehouse confirmation"></i></span>
+          }
+          @if (status !== Status.New) {
+            <span><i class="fas fa-warehouse"></i></span>
+          }
+          @if (status === Status.Packing) {
+            <span><i class="fas fa-truck-loading confirmation"></i></span>
+          }
+          @if (status !== Status.Packing) {
+            <span><i class="fas fa-truck-loading"></i></span>
+          }
+          @if (status === Status.Transit) {
+            <span><i class="fas fa-truck confirmation"></i></span>
+          }
+          @if (status !== Status.Transit) {
+            <span><i class="fas fa-truck"></i></span>
+          }
+          @if (status === Status.Delivered) {
+            <span class="fa-layers fa-fw">
+              <span><i class="fas fa-home confirmation"></i></span>
+              <span class="fa-layers-counter accent-notification" style="width: max-content">{{results.eta}} {{'LABEL_DAYS' | translate}}</span>
+            </span>
+          }
+          @if (status !== Status.Delivered) {
+            <span class="fa-layers fa-fw">
+              <span><i class="fas fa-home"></i></span>
+              <span class="fa-layers-counter accent-notification" style="width: max-content">{{results.eta}} {{'LABEL_DAYS' | translate}}</span>
+            </span>
+          }
         </div>
       </div>
     </div>

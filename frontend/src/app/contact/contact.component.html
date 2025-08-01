@@ -28,7 +28,7 @@
                     placeholder="{{ 'WRITE_REVIEW_PLACEHOLDER' | translate}}"
                     aria-label="Field for entering the comment or the feedback"></textarea>
           <mat-hint align="end">{{comment.value?.length || 0}}/160</mat-hint>
-          <mat-error *ngIf="feedbackControl.invalid && feedbackControl.errors.required" translate>MANDATORY_COMMENT
+          <mat-error @if (feedbackControl.invalid && feedbackControl.errors.required) { translate>MANDATORY_COMMENT
           </mat-error>
         </mat-form-field>
 
@@ -50,9 +50,9 @@
           <input id="captchaControl" ngDefaultControl [formControl]="captchaControl" matInput type="text"
                 placeholder="{{ 'MANDATORY_CAPTCHA' | translate}}"
                 aria-label="Field for the result of the CAPTCHA code" pattern="-?[\d]*">
-          <mat-error *ngIf="captchaControl.invalid && captchaControl.errors.required" translate>MANDATORY_CAPTCHA
+          <mat-error @if (captchaControl.invalid && captchaControl.errors.required) { translate>MANDATORY_CAPTCHA
           </mat-error>
-          <mat-error *ngIf="captchaControl.invalid && captchaControl.errors.pattern" translate>INVALID_CAPTCHA
+          <mat-error @if (captchaControl.invalid && captchaControl.errors.pattern) { translate>INVALID_CAPTCHA
           </mat-error>
         </mat-form-field>
 

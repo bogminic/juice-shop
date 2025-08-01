@@ -17,8 +17,12 @@
           <mat-label translate>LABEL_EMAIL</mat-label>
           <input id="emailControl" [formControl]="emailControl" (focus)="this.error=null" type="text" matInput
                 aria-label="Email address field">
-          <mat-error *ngIf="emailControl.invalid && emailControl.errors.required" translate>MANDATORY_EMAIL</mat-error>
-          <mat-error *ngIf="emailControl.invalid && emailControl.errors.email" translate>INVALID_EMAIL</mat-error>
+          @if (emailControl.invalid && emailControl.errors.required) {
+            <mat-error translate>MANDATORY_EMAIL</mat-error>
+          }
+          @if (emailControl.invalid && emailControl.errors.email) {
+            <mat-error translate>INVALID_EMAIL</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field appearance="outline" color="accent">
@@ -30,10 +34,11 @@
             <em style="margin-left:5px;" translate>{{ 'INVALID_PASSWORD_LENGTH' | translate: {length: '5-40'} }}</em>
           </mat-hint>
           <mat-hint align="end">{{password.value?.length || 0}}/20</mat-hint>
-          <mat-error *ngIf="passwordControl.invalid && passwordControl.errors.required" translate>MANDATORY_PASSWORD
-          </mat-error>
+          @if (passwordControl.invalid && passwordControl.errors.required) {
+            <mat-error translate>MANDATORY_PASSWORD</mat-error>
+          }
           <mat-error
-            *ngIf="passwordControl.invalid && (passwordControl.errors.minlength || passwordControl.errors.maxlength)"
+            @if (passwordControl.invalid && (passwordControl.errors.minlength || passwordControl.errors.maxlength)) {
             translate [translateParams]="{length: '5-40'}">INVALID_PASSWORD_LENGTH
           </mat-error>
         </mat-form-field>
@@ -43,23 +48,29 @@
           <input #repeatPassword id="repeatPasswordControl" [formControl]="repeatPasswordControl"
                 (focus)="this.error=null" type="password" matInput aria-label="Field to confirm the password">
           <mat-hint align="end">{{repeatPassword.value?.length || 0}}/40</mat-hint>
-          <mat-error *ngIf="repeatPasswordControl.invalid && repeatPasswordControl.errors.required" translate>
-            MANDATORY_PASSWORD_REPEAT
-          </mat-error>
-          <mat-error *ngIf="repeatPasswordControl.invalid && repeatPasswordControl.errors.notSame" translate>
-            PASSWORDS_NOT_MATCHING
-          </mat-error>
+          @if (repeatPasswordControl.invalid && repeatPasswordControl.errors.required) {
+            <mat-error translate>
+              MANDATORY_PASSWORD_REPEAT
+            </mat-error>
+          }
+          @if (repeatPasswordControl.invalid && repeatPasswordControl.errors.notSame) {
+            <mat-error translate>
+              PASSWORDS_NOT_MATCHING
+            </mat-error>
+          }
         </mat-form-field>
 
         <mat-slide-toggle #passwordInfoToggle [color]="passwordStrength.color">{{'SHOW_PASSWORD_ADVICE' | translate}}</mat-slide-toggle>
         <app-password-strength #passwordStrength [password]="password.value"></app-password-strength>
-        <app-password-strength-info *ngIf="passwordInfoToggle.checked" [passwordComponent]="passwordStrength"
-                                    [lowerCaseCriteriaMsg]="'LOWER_CASE_CRITERIA_MSG' | translate"
-                                    [upperCaseCriteriaMsg]="'UPPER_CASE_CRITERIA_MSG'| translate"
-                                    [digitsCriteriaMsg]="'DIGITS_CRITERIA_MSG'| translate"
-                                    [specialCharsCriteriaMsg]="'SPECIAL_CHARS_CRITERIA_MSG' | translate"
-                                    [minCharsCriteriaMsg]="'MIN_CHARS_CRITERIA_MSG' | translate:{value: 8}">
-        </app-password-strength-info>
+        @if (passwordInfoToggle.checked) {
+          <app-password-strength-info [passwordComponent]="passwordStrength"
+                                      [lowerCaseCriteriaMsg]="'LOWER_CASE_CRITERIA_MSG' | translate"
+                                      [upperCaseCriteriaMsg]="'UPPER_CASE_CRITERIA_MSG'| translate"
+                                      [digitsCriteriaMsg]="'DIGITS_CRITERIA_MSG'| translate"
+                                      [specialCharsCriteriaMsg]="'SPECIAL_CHARS_CRITERIA_MSG' | translate"
+                                      [minCharsCriteriaMsg]="'MIN_CHARS_CRITERIA_MSG' | translate:{value: 8}">
+          </app-password-strength-info>
+        }
 
         <div class="security-container">
 
@@ -70,7 +81,7 @@
             <mat-select [formControl]="securityQuestionControl" placeholder="" [(value)]="selected"
                         (focus)="this.error=null" name="securityQuestion"
                         aria-label="Selection list for the security question">
-              <mat-option *ngFor="let question of securityQuestions" [value]="question.id" class="mat-body">
+              <mat-option @for (question of securityQuestions; track question) { [value]="question.id" class="mat-body">
                 {{question.question}}
               </mat-option>
             </mat-select>
@@ -78,9 +89,11 @@
               <i class="fas fa-exclamation-circle"></i>
               <em style="margin-left:5px;" translate>CANNOT_BE_CHANGED_LATER</em>
             </mat-hint>
-            <mat-error *ngIf="securityQuestionControl.invalid && securityQuestionControl.errors.required" translate>
-              MANDATORY_SECURITY_QUESTION
-            </mat-error>
+            @if (securityQuestionControl.invalid && securityQuestionControl.errors.required) {
+              <mat-error translate>
+                MANDATORY_SECURITY_QUESTION
+              </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline" color="accent">
@@ -88,9 +101,11 @@
             <input id="securityAnswerControl" [formControl]="securityAnswerControl" (focus)="this.error=null" type="text"
                   matInput [placeholder]="'SECURITY_ANSWER_PLACEHOLDER' | translate"
                   aria-label="Field for the answer to the security question">
-            <mat-error *ngIf="securityAnswerControl.invalid && securityAnswerControl.errors.required" translate>
-              MANDATORY_SECURITY_ANSWER
-            </mat-error>
+            @if (securityAnswerControl.invalid && securityAnswerControl.errors.required) {
+              <mat-error translate>
+                MANDATORY_SECURITY_ANSWER
+              </mat-error>
+            }
           </mat-form-field>
         </div>
 

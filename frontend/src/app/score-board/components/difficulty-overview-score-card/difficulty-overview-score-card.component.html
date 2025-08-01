@@ -6,7 +6,7 @@
   [showProgressBar]="false"
 >
   <div right-side class="difficulties-group">
-    <div class="difficulty-container" *ngFor="let difficulty of difficultySummaries">
+    <div class="difficulty-container" @for (difficulty of difficultySummaries; track difficulty) {>
       <div class="star-container">
         <svg
           width="28"
@@ -25,8 +25,8 @@
               x1="0" x2="0" y1="1" y2="0"
             >
             <stop stop-color="var(--theme-accent)" />
-            <stop *ngIf="difficulty.availableChallenges === 0" offset="0%" stop-color="var(--theme-accent)" />
-            <stop *ngIf="difficulty.availableChallenges !== 0" [attr.offset]="difficulty.solvedChallenges / difficulty.availableChallenges * 100 + '%'" stop-color="var(--theme-accent)" />
+            <stop @if (difficulty.availableChallenges === 0) { offset="0%" stop-color="var(--theme-accent)" />
+            <stop @if (difficulty.availableChallenges !== 0) { [attr.offset]="difficulty.solvedChallenges / difficulty.availableChallenges * 100 + '%'" stop-color="var(--theme-accent)" />
             <stop stop-color="var(--theme-accent)" />
             <!-- has to be duplicated here to stop the gradient directly instead of doing a "gradual" transition -->
             <stop stop-color="var(--theme-primary)" />

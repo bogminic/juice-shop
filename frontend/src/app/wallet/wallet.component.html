@@ -21,12 +21,16 @@
     <mat-form-field appearance="outline" color="accent">
       <mat-label>{{'LABEL_AMOUNT' | translate}}</mat-label>
       <input [formControl]="balanceControl" type="number" matInput aria-label="Enter an amount">
-      <mat-error *ngIf="balanceControl.invalid && balanceControl.errors.required">
-        {{"MANDATORY_AMOUNT"| translate}}
-      </mat-error>
-      <mat-error *ngIf="balanceControl.invalid && (balanceControl.errors.min || balanceControl.errors.max)">
-        {{"AMOUNT_LIMIT" | translate}}
-      </mat-error>
+      @if (balanceControl.invalid && balanceControl.errors.required) {
+        <mat-error>
+          {{"MANDATORY_AMOUNT"| translate}}
+        </mat-error>
+      }
+      @if (balanceControl.invalid && (balanceControl.errors.min || balanceControl.errors.max)) {
+        <mat-error>
+          {{"AMOUNT_LIMIT" | translate}}
+        </mat-error>
+      }
     </mat-form-field>
 
     <button type="submit" id="submitButton" (click)="continue()" [disabled]="balanceControl.invalid"

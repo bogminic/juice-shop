@@ -14,7 +14,7 @@
                     matTextareaAutosize matAutosizeMinRows="2" maxlength="160"
                     matAutosizeMaxRows="4" aria-label="Text field to edit a product review"  (focus)="this.error=null"></textarea>
         <mat-hint align="end">{{textPut.value?.length || 0}}/160</mat-hint>
-        <mat-error *ngIf="editReviewControl.invalid" translate>MANDATORY_REVIEW</mat-error>
+        <mat-error @if (editReviewControl.invalid) { translate>MANDATORY_REVIEW</mat-error>
       </mat-form-field>
     </div>
   </div>

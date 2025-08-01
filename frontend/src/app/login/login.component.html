@@ -9,7 +9,9 @@
 
       <h1>Login</h1>
 
-      <div class="error" *ngIf="error">{{error}}</div>
+      @if (error) {
+        <div class="error">{{error}}</div>
+      }
 
       <div class="form-container" id="login-form">
 
@@ -20,7 +22,9 @@
                 (focus)="this.error=null"
                 matInput placeholder=""
                 aria-label="Text field for the login email">
-          <mat-error *ngIf="emailControl.invalid" translate>MANDATORY_EMAIL</mat-error>
+          @if (emailControl.invalid) {
+            <mat-error translate>MANDATORY_EMAIL</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field color="accent" appearance="outline">
@@ -30,16 +34,18 @@
                 (focus)="this.error=null"
                 matInput placeholder="" [type]="hide ? 'password' : 'text'"
                 aria-label="Text field for the login password">
-          <button *ngIf="hide" mat-icon-button matSuffix (click)="hide = !hide"
+          <button @if (hide) { mat-icon-button matSuffix (click)="hide = !hide"
                   aria-label="Button to display the password" matTooltip="{{ 'SHOW_PWD_TOOLTIP' | translate  }}"
                   matTooltipPosition=right>
             <i class="fas fa-eye" aria-label="Eye"></i>
           </button>
-          <button *ngIf="!hide" mat-icon-button matSuffix (click)="hide = !hide" aria-label="Button to hide the password" matTooltip="{{ 'HIDE_PWD_TOOLTIP' | translate  }}"
+          <button @if (!hide) { mat-icon-button matSuffix (click)="hide = !hide" aria-label="Button to hide the password" matTooltip="{{ 'HIDE_PWD_TOOLTIP' | translate  }}"
                   matTooltipPosition=right>
             <i class="fas fa-eye-slash" aria-label="Eye Slash"></i>
           </button>
-          <mat-error *ngIf="passwordControl.invalid" translate>MANDATORY_PASSWORD</mat-error>
+          @if (passwordControl.invalid) {
+            <mat-error translate>MANDATORY_PASSWORD</mat-error>
+          }
         </mat-form-field>
 
         <a class="primary-link forgot-pw" routerLink="/forgot-password" translate>FORGOT_PASSWORD</a>
@@ -56,17 +62,19 @@
           {{'REMEMBER_ME' | translate}}
         </mat-checkbox>
 
-        <div class="breakLine" *ngIf="!oauthUnavailable">
-          <div class="line">
-            <div></div>
+        @if (!oauthUnavailable) {
+          <div class="breakLine">
+            <div class="line">
+              <div></div>
+            </div>
+            <div class="textOnLine" translate>LABEL_OR</div>
+            <div class="line">
+              <div></div>
+            </div>
           </div>
-          <div class="textOnLine" translate>LABEL_OR</div>
-          <div class="line">
-            <div></div>
-          </div>
-        </div>
+        }
 
-        <button id="loginButtonGoogle" *ngIf="!oauthUnavailable" mat-raised-button color="accent" (click)="googleLogin()"
+        <button id="loginButtonGoogle" @if (!oauthUnavailable) { mat-raised-button color="accent" (click)="googleLogin()"
                 aria-label="Login with Google" class="google-button"><i
           class="fab fa-google fa-lg"></i> {{'BTN_GOOGLE_LOGIN' | translate}}
         </button>

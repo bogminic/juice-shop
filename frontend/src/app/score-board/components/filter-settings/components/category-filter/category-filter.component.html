@@ -6,7 +6,7 @@
   All
 </button>
 <button
-  *ngFor="let category of availableCategories"
+  @for (category of availableCategories; track category) {
   class="pill"
   [ngClass]="{ selected: isCategorySelected(category) }"
   (click)="toggleCategorySelected(category)"

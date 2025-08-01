@@ -3,21 +3,46 @@
   ~ SPDX-License-Identifier: MIT
   -->
 
-<mat-card appearance="outlined" class="mat-own-card mat-elevation-z6">
+<mat-c        </div>
+      </mat-expansion-panel>
+    }
+    <mat-divider></mat-divider>
+    <div style="margin-top: 20px; margin-bottom: 20px;">
+      <button mat-stroked-button class="btn btn-return" (click)="routeToPreviousUrl()">
+        <mat-icon>
+          navigate_before
+        </mat-icon>
+        {{'LABEL_BACK' | translate}}
+      </button>
+      <button mat-raised-button mat-button class="btn nextButton" color="primary" aria-label="Proceed to review"
+              [disabled]="paymentId === undefined && paymentMode !== 'wallet'" (click)="choosePayment()">
+        <mat-icon>
+          navigate_next
+        </mat-icon>
+        <span translate>LABEL_CONTINUE</span>
+      </button>
+      <p style="text-align: center;margin-top: -27px;">
+        @if (mode !== 'deluxe' && mode !== 'wallet') {
+          <span translate>REVIEW_ALERT</span>
+        }
+        @if (mode === 'wallet') {
+          <span translate>REVIEW_WALLET</span>
+        }ined" class="mat-own-card mat-elevation-z6">
   <div class="mdc-card">
     <app-payment-method (emitSelection)="getMessage($event)" [allowDelete]="false"></app-payment-method>
     <mat-divider></mat-divider>
-    <div class="mat-elevation-z0" class="custom-card" *ngIf="mode !== 'wallet'">
-      <div fxLayout="row">
-        <div fxFlex="42%">
-          <span translate class="card-title">LABEL_PAY_USING_WALLET</span>
-        </div>
-        <div fxFlex="38%">
-          <b>
-            <span class="card-title" translate>LABEL_WALLET_BALANCE</span>
-            <span class="confirmation card-title"> {{ walletBalanceStr }}</span>
-          </b>
-        </div>
+    @if (mode !== 'wallet') {
+      <div class="mat-elevation-z0" class="custom-card">
+        <div fxLayout="row">
+          <div fxFlex="42%">
+            <span translate class="card-title">LABEL_PAY_USING_WALLET</span>
+          </div>
+          <div fxFlex="38%">
+            <b>
+              <span class="card-title" translate>LABEL_WALLET_BALANCE</span>
+              <span class="confirmation card-title"> {{ walletBalanceStr }}</span>
+            </b>
+          </div>
         <div fxFlex="20%">
           <button type="submit" color="primary" mat-raised-button class="btn" style="float: right;"
                   [disabled]="(walletBalance - totalPrice) < 0" (click)="useWallet()">
@@ -25,22 +50,22 @@
           </button>
         </div>
       </div>
-    </div>
+    }
     <mat-divider></mat-divider>
-    <mat-expansion-panel class="mat-elevation-z0" [expanded]="couponPanelExpanded" id="collapseCouponElement"
-                         *ngIf="mode !== 'wallet'">
-      <mat-expansion-panel-header class="detail-divider">
-        <mat-panel-title>
-          {{"ADD_A_COUPON" | translate}}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{"VOUCHERS_AND_PROMOTIONAL_CODE" | translate}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div *ngIf="couponConfirmation && !couponControl.dirty" style="margin-top:5px;" class="confirmation">{{
+    @if (mode !== 'wallet') {
+      <mat-expansion-panel class="mat-elevation-z0" [expanded]="couponPanelExpanded" id="collapseCouponElement">
+        <mat-expansion-panel-header class="detail-divider">
+          <mat-panel-title>
+            {{"ADD_A_COUPON" | translate}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{"VOUCHERS_AND_PROMOTIONAL_CODE" | translate}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+      <div @if (couponConfirmation && !couponControl.dirty) { style="margin-top:5px;" class="confirmation">{{
         couponConfirmation }}
       </div>
-      <div *ngIf="couponError && !couponControl.dirty" style="margin-top:5px;" class="error">{{couponError?.error}}
+      <div @if (couponError && !couponControl.dirty) { style="margin-top:5px;" class="error">{{couponError?.error}}
       </div>
       <mat-form-field appearance="outline" color="accent">
         <mat-label translate>LABEL_COUPON</mat-label>
@@ -49,7 +74,7 @@
         </mat-hint>
         <input #coupon id="coupon" [formControl]="couponControl" matInput type="text" placeholder="{{ 'ENTER_COUPON_CODE' | translate}}">
         <mat-hint align="end">{{coupon .value?.length || 0}}/10</mat-hint>
-        <mat-error *ngIf="couponControl.invalid && (couponControl.errors.minlength || couponControl.errors.maxlength)">
+        <mat-error @if (couponControl.invalid && (couponControl.errors.minlength || couponControl.errors.maxlength)) {>
           {{'COUPON_CODE_HINT' | translate}}
         </mat-error>
       </mat-form-field>
@@ -61,36 +86,46 @@
         {{'BTN_REDEEM' | translate}}
       </button>
     </mat-expansion-panel>
+    }
     <mat-divider></mat-divider>
-    <mat-expansion-panel class="mat-elevation-z0" [expanded]="paymentPanelExpanded" *ngIf="mode !== 'wallet'">
-      <mat-expansion-panel-header class="detail-divider">
-        <mat-panel-title>
-          {{"OTHER_PAYMENT_OPTIONS" | translate}}
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div fxLayout="row" fxLayout.lt-lg="column">
-        <div fxFlex="34%" fxFlex.lt-lg="100%" class="mat-elevation-z0">
-          <div class="payment-label">
-            <label translate>LABEL_DONATIONS</label>
-          </div>
-          <small>
-            (<span *ngIf="applicationName === 'OWASP Juice Shop'" translate
-                   [translateParams]="{juiceshop: 'OWASP Juice Shop'}">THANKS_FOR_SUPPORT</span>
-            <span *ngIf="applicationName !== 'OWASP Juice Shop'" translate
-                  [translateParams]="{appname: applicationName}">THANKS_FOR_SUPPORT_CUSTOMIZED</span>
-            <i style="margin-left: 3px;" class="fas fa-heart error"></i>)
-          </small>
-          <div class="button-container" style="margin-top: 6px;">
-            <a href="https://pwning.owasp-juice.shop/companion-guide/latest/part3/donations.html">
-              <button mat-stroked-button><i class="fab fa-stripe fa-lg"></i> {{'BTN_CREDIT_CARD' | translate}}</button>
-            </a>
-            <button mat-stroked-button (click)="showBitcoinQrCode()" *ngIf="false"><i class="fab fa-btc fa-lg"></i>
-              Bitcoin
-            </button>
-            <button mat-stroked-button (click)="showDashQrCode()" *ngIf="false"><i class="fa-lg">Ð</i> Dash</button>
-            <button mat-stroked-button (click)="showEtherQrCode()" *ngIf="false"><i class="fab fa-ethereum fa-lg"></i>
-              Ether
-            </button>
+    @if (mode !== 'wallet') {
+      <mat-expansion-panel class="mat-elevation-z0" [expanded]="paymentPanelExpanded">
+        <mat-expansion-panel-header class="detail-divider">
+          <mat-panel-title>
+            {{"OTHER_PAYMENT_OPTIONS" | translate}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="row" fxLayout.lt-lg="column">
+          <div fxFlex="34%" fxFlex.lt-lg="100%" class="mat-elevation-z0">
+            <div class="payment-label">
+              <label translate>LABEL_DONATIONS</label>
+            </div>
+            <small>
+              (@if (applicationName === 'OWASP Juice Shop') {
+                <span translate [translateParams]="{juiceshop: 'OWASP Juice Shop'}">THANKS_FOR_SUPPORT</span>
+              }
+              @if (applicationName !== 'OWASP Juice Shop') {
+                <span translate [translateParams]="{appname: applicationName}">THANKS_FOR_SUPPORT_CUSTOMIZED</span>
+              }
+              <i style="margin-left: 3px;" class="fas fa-heart error"></i>)
+            </small>
+            <div class="button-container" style="margin-top: 6px;">
+              <a href="https://pwning.owasp-juice.shop/companion-guide/latest/part3/donations.html">
+                <button mat-stroked-button><i class="fab fa-stripe fa-lg"></i> {{'BTN_CREDIT_CARD' | translate}}</button>
+              </a>
+              @if (false) {
+                <button mat-stroked-button (click)="showBitcoinQrCode()"><i class="fab fa-btc fa-lg"></i>
+                  Bitcoin
+                </button>
+              }
+              @if (false) {
+                <button mat-stroked-button (click)="showDashQrCode()"><i class="fa-lg">Ð</i> Dash</button>
+              }
+              @if (false) {
+                <button mat-stroked-button (click)="showEtherQrCode()"><i class="fab fa-ethereum fa-lg"></i>
+                  Ether
+                </button>
+              }
           </div>
         </div>
         <span class="fill-remaining-space"></span>
@@ -99,10 +134,12 @@
             <label translate>LABEL_MERCHANDISE</label>
           </div>
           <small>
-            (<span *ngIf="applicationName === 'OWASP Juice Shop'" translate
-                   [translateParams]="{juiceshop: 'OWASP Juice Shop'}">OFFICIAL_MERCHANDISE_STORES</span>
-            <span *ngIf="applicationName !== 'OWASP Juice Shop'" translate
-                  [translateParams]="{appname: applicationName}">OFFICIAL_MERCHANDISE_STORES_CUSTOMIZED</span>
+            (@if (applicationName === 'OWASP Juice Shop') {
+              <span translate [translateParams]="{juiceshop: 'OWASP Juice Shop'}">OFFICIAL_MERCHANDISE_STORES</span>
+            }
+            @if (applicationName !== 'OWASP Juice Shop') {
+              <span translate [translateParams]="{appname: applicationName}">OFFICIAL_MERCHANDISE_STORES_CUSTOMIZED</span>
+            }
             <i style="margin-left: 3px;" class="fas fa-thumbs-up confirmation"></i>)
           </small>
           <div class="button-container" style="margin-top: 6px;">
@@ -141,8 +178,8 @@
         <span translate>LABEL_CONTINUE</span>
       </button>
       <p style="text-align: center;margin-top: -27px;">
-        <span translate *ngIf="mode !== 'deluxe' && mode !== 'wallet'">REVIEW_ALERT</span>
-        <span translate *ngIf="mode === 'wallet'">REVIEW_WALLET</span>
+        <span translate @if (mode !== 'deluxe' && mode !== 'wallet') {>REVIEW_ALERT</span>
+        <span translate @if (mode === 'wallet') {>REVIEW_WALLET</span>
       </p>
     </div>
   </div>

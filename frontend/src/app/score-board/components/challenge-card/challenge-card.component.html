@@ -10,20 +10,20 @@
 <div class="description-row" [innerHtml]="challenge.description"></div>
 <div class="bottom-row">
   <div class="tags">
-    <span *ngFor="let tag of challenge.tagList" class="tag" [matTooltip]="('TAG_' + tag?.toUpperCase().split(' ').join('_') + '_DESCRIPTION' | translate)">{{ tag }}</span>
+    <span @for (tag of challenge.tagList; track tag) { class="tag" [matTooltip]="('TAG_' + tag?.toUpperCase().split(' ').join('_') + '_DESCRIPTION' | translate)">{{ tag }}</span>
   </div>
   <div class="badge-group">
     <!-- info text if the challenge is unavailable -->
     <button
       class="badge"
-      *ngIf="challenge.disabledEnv !== null && challenge.disabledEnv !== 'safetyMode'"
+      @if (challenge.disabledEnv !== null && challenge.disabledEnv !== 'safetyMode') {
       [matTooltip]="'CHALLENGE_UNAVAILABLE' | translate:{ env: challenge.disabledEnv }"
     >
       <mat-icon [style.color]="'var(--theme-warn)'">info_outline</mat-icon>
     </button>
     <button
       class="badge"
-      *ngIf="challenge.disabledEnv === 'safetyMode'"
+      @if (challenge.disabledEnv === 'safetyMode') {
       [matTooltip]="'CHALLENGE_UNAVAILABLE_SAFETYMODE'| translate:{ env: challenge.disabledEnv}"
     >
       <mat-icon [style.color]="'var(--theme-warn)'">info_outline</mat-icon>
@@ -31,7 +31,7 @@
     <!-- coding challenge badge -->
     <button
       class="badge"
-      *ngIf="applicationConfiguration.challenges.codingChallengesEnabled !== 'never' && challenge.hasCodingChallenge"
+      @if (applicationConfiguration.challenges.codingChallengesEnabled !== 'never' && challenge.hasCodingChallenge) {
       (click)="openCodingChallengeDialog(challenge.key)"
       [disabled]="challenge.solved === false && applicationConfiguration.challenges.codingChallengesEnabled !== 'always'"
       [ngClass]="{
@@ -40,13 +40,13 @@
       }"
       [matTooltip]="(challenge.solved ? 'LAUNCH_CODING_CHALLENGE' : 'SOLVE_HACKING_CHALLENGE') | translate"
     >
-      <span class="badge-status" *ngIf="challenge.codingChallengeStatus !== 0">{{ challenge.codingChallengeStatus }}/2</span>
+      <span class="badge-status" @if (challenge.codingChallengeStatus !== 0) {>{{ challenge.codingChallengeStatus }}/2</span>
       <mat-icon>code</mat-icon>
     </button>
     <!-- cheat cheat link-->
     <a
       class="badge not-completable"
-      *ngIf="challenge.mitigationUrl && challenge.solved"
+      @if (challenge.mitigationUrl && challenge.solved) {
       [href]="challenge.mitigationUrl"
       target="_blank"
       rel="noopener noreferrer"
@@ -59,7 +59,7 @@
     <button
       class="badge"
       [ngClass]="{ 'completed': challenge.solved }"
-      *ngIf="challenge.solved && applicationConfiguration.ctf.showFlagsInNotifications"
+      @if (challenge.solved && applicationConfiguration.ctf.showFlagsInNotifications) {
       (click)="repeatChallengeNotification(challenge.key)"
       [matTooltip]="'NOTIFICATION_RESEND_INSTRUCTIONS' | translate"
     >
@@ -68,7 +68,7 @@
     <!-- hacking instructor-->
     <button
       class="badge not-completable"
-      *ngIf="applicationConfiguration.hackingInstructor.isEnabled && hasInstructions(challenge.name)"
+      @if (applicationConfiguration.hackingInstructor.isEnabled && hasInstructions(challenge.name)) {
       [matTooltip]="'INFO_HACKING_INSTRUCTOR' | translate"
       (click)="startHackingInstructorFor(challenge.name)"
     >
@@ -77,7 +77,7 @@
     <!-- challenge hint -->
     <!-- with hintUrl -->
     <a
-      *ngIf="challenge.hint && challenge.hintUrl"
+      @if (challenge.hint && challenge.hintUrl) {
       class="badge not-completable"
       [style.padding]="'0 6px 0 4px'"
       target="_blank"
@@ -91,7 +91,7 @@
     <!-- challenge hint -->
     <!-- without hintUrl -->
     <span
-      *ngIf="challenge.hint && !challenge.hintUrl"
+      @if (challenge.hint && !challenge.hintUrl) {
       class="badge not-completable"
       [style.padding]="'0 6px 0 4px'"
       [matTooltip]="challenge.hint"

@@ -17,7 +17,7 @@
         <br/>
         <div>
           <p class="item-price">{{data.productData.price}}&curren;</p>
-          <div *ngIf="data.productData.points > 0" matTooltip="{{'LABEL_BONUS' | translate}}"
+          <div @if (data.productData.points > 0) { matTooltip="{{'LABEL_BONUS' | translate}}"
                aria-label="Bonus points when buying the product">
             <span class="fa-2x fa-layers fa-fw">
             <i class="fas fa-crown"></i>
@@ -41,8 +41,8 @@
       <button mat-button style="height: 0; position: absolute;">
         <!-- 'absorbs' the auto-focus behavior -->
       </button>
-      <div *ngIf="(reviews$| async)?.length >= 1; else emptyResult">
-        <div *ngFor="let review of reviews$|async" class="comment">
+      <div @if ((reviews$| async)?.length >= 1; else emptyResult) {>
+        <div @for (review of reviews$|async; track review) { class="comment">
           <div fxLayout="row">
             <div class="review-text"
                  (click)="review.author !== 'Anonymous' && review.author === author && editReview(review)"

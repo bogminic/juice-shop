@@ -18,13 +18,13 @@
               <span [hidden]="notification.copied">{{"COPY_TO_CLIPBOARD" | translate}}</span>
             </button>
             <br/>
-            <span *ngIf="showCtfCountryDetailsInNotifications !== 'none'" class="icon-box">
+            <span @if (showCtfCountryDetailsInNotifications !== 'none') { class="icon-box">
               <span
                 class="fi fi-{{notification.country.code | lowercase}}"
-                *ngIf="showCtfCountryDetailsInNotifications === 'flag' || showCtfCountryDetailsInNotifications === 'both'">
+                @if (showCtfCountryDetailsInNotifications === 'flag' || showCtfCountryDetailsInNotifications === 'both') {>
               </span>
-              <mat-icon *ngIf="showCtfCountryDetailsInNotifications === 'name'">my_location</mat-icon>&nbsp;
-              <span *ngIf="showCtfCountryDetailsInNotifications === 'name' || showCtfCountryDetailsInNotifications === 'both'">{{notification.country.name}}</span>
+              <mat-icon @if (showCtfCountryDetailsInNotifications === 'name') {>my_location</mat-icon>&nbsp;
+              <span @if (showCtfCountryDetailsInNotifications === 'name' || showCtfCountryDetailsInNotifications === 'both') {>{{notification.country.name}}</span>
             </span>
           </div>
         }

@@ -5,7 +5,8 @@
 <mat-card appearance="outlined" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class=" container mat-elevation-z6 mat-own-card" >
   <div class="mdc-card" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px">
     <div fxLayout="column" fxLayoutGap="20px" fxFlex="50" fxFlex.lt-md="100%">
-            <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column" *ngIf="address && paymentMethod">       
+      @if (address && paymentMethod) {
+        <div fxLayout="row" fxLayoutGap="20px" fxLayout.lt-md="column">       
           <!-- Delivery Address Card -->
           <mat-card appearance="outlined" class="mat-elevation-z0" fxFlex="60" fxFlex.lt-md="100%">
             <div fxFlex="1 1 auto" class="mdc-card">
@@ -17,7 +18,7 @@
             </div>
           </mat-card>
           <!-- Payment Method Card -->
-          <mat-card appearance="outlined" class="mat-elevation-z0" fxFlex="40" fxFlex.lt-md="100%" *ngIf="paymentMethod !== 'wallet'; else walletPayment">
+          <mat-card appearance="outlined" class="mat-elevation-z0" fxFlex="40" fxFlex.lt-md="100%" @if (paymentMethod !== 'wallet'; else walletPayment) {>
             <div class="mdc-card">
               <div><b >{{"PAYMENT_METHOD" | translate}}</b></div>
               <div><span >{{"CARD_ENDING_IN" | translate}}</span> {{paymentMethod?.cardNum}}</div>

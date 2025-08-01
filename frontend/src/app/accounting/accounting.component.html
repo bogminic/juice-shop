@@ -26,28 +26,34 @@
           <ng-container matColumnDef="Status">
             <mat-header-cell *matHeaderCellDef translate="LABEL_STATUS" style="max-width: 96px;"></mat-header-cell>
             <mat-cell *matCellDef="let element" style="max-width: 96px;">
-              <div *ngIf="!element.delivered" class="error" translate>LABEL_IN_TRANSIT</div>
-              <div *ngIf="element.delivered" class="confirmation" translate>LABEL_DELIVERED</div>
+              @if (element.delivered) {
+                <span class="confirmation" translate>LABEL_DELIVERED</span>
+              } @else {
+                <span class="error" translate>LABEL_IN_TRANSIT</span>
+              }
             </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="StatusButton">
             <mat-header-cell *matHeaderCellDef style="max-width: 96px;"></mat-header-cell>
             <mat-cell *matCellDef="let element" style="max-width: 96px;">
-              <button *ngIf="element.delivered" mat-icon-button aria-label="Print order confirmation"
+              @if (element.delivered) {
+              <button mat-icon-button aria-label="Print order confirmation"
                       matTooltip="{{ 'LABEL_MARK_AS_TRANSIT' | translate }}" matTooltipPosition="below"
                       (click)="changeDeliveryStatus(element.delivered, element.id)">
                 <mat-icon>
                   cached
                 </mat-icon>
               </button>
-              <button *ngIf="!element.delivered" mat-icon-button aria-label="Print order confirmation"
+            } @else { 
+              <button mat-icon-button aria-label="Print order confirmation"
                       matTooltip="{{ 'LABEL_MARK_AS_DELIVERED' | translate }}" matTooltipPosition="below"
                       (click)="changeDeliveryStatus(element.delivered, element.id)">
                 <mat-icon>
                   check_circle
                 </mat-icon>
               </button>
+            }
             </mat-cell>
           </ng-container>
 

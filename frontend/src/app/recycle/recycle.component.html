@@ -19,10 +19,10 @@
           <mat-label>{{"LABEL_QUANTITY" | translate}}</mat-label>
           <input [formControl]="recycleQuantityControl" type="number" [placeholder]="'IN_LITERS_PLACEHOLDER' | translate"
                  matInput>
-          <mat-error *ngIf="recycleQuantityControl.invalid && recycleQuantityControl.errors.required" translate>
+          <mat-error @if (recycleQuantityControl.invalid && recycleQuantityControl.errors.required) { translate>
             {{"MANDATORY_QUANTITY" | translate}}
           </mat-error>
-          <mat-error *ngIf="recycleQuantityControl.invalid && (recycleQuantityControl.errors.min || recycleQuantityControl.errors.max)">
+          <mat-error @if (recycleQuantityControl.invalid && (recycleQuantityControl.errors.min || recycleQuantityControl.errors.max)) {>
             {{"INVALID_QUANTITY" | translate: {range: '10-1000'} }}
           </mat-error>
         </mat-form-field>
@@ -30,15 +30,15 @@
         <app-address (emitSelection)="getMessage($event)" [addNewAddressDiv]="false" #addressComp
                     class="mat-elevation-z0"></app-address>
 
-      <mat-form-field *ngIf="pickup.value && recycleQuantityControl.value > 100" appearance="outline">
+      <mat-form-field @if (pickup.value && recycleQuantityControl.value > 100) { appearance="outline">
         <mat-label>{{"LABEL_PICKUP_DATE" | translate}}</mat-label>
         <input [formControl]="pickUpDateControl" matInput [matDatepicker]="picker">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="pickUpDateControl.invalid">{{"INVALID_DATE" | translate }}</mat-error>
+        <mat-error @if (pickUpDateControl.invalid) {>{{"INVALID_DATE" | translate }}</mat-error>
       </mat-form-field>
 
-        <mat-checkbox [formControl]="pickup" *ngIf="recycleQuantityControl.value > 100">{{'REQUEST_PICKUP' | translate}}
+        <mat-checkbox [formControl]="pickup" @if (recycleQuantityControl.value > 100) {>{{'REQUEST_PICKUP' | translate}}
         </mat-checkbox>
 
       </div>
