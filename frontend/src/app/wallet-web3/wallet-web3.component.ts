@@ -13,7 +13,7 @@ import {
 import { MatIconModule } from '@angular/material/icon'
 import { FormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { MatButtonModule } from '@angular/material/button'
@@ -30,7 +30,8 @@ const client = createClient({
   selector: 'app-wallet-web3',
   templateUrl: './wallet-web3.component.html',
   styleUrls: ['./wallet-web3.component.scss'],
-  imports: [MatCardModule, MatButtonModule, TranslateModule, MatFormFieldModule, MatLabel, MatInputModule, FormsModule, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, MatButtonModule, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule]
 })
 export class WalletWeb3Component implements OnInit {
   private readonly keysService = inject(KeysService)

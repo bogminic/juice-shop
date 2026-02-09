@@ -18,20 +18,22 @@ describe('PasswordStrengthComponent', () => {
 
     fixture = TestBed.createComponent(PasswordStrengthComponent)
     component = fixture.componentInstance
-    fixture.detectChanges()
   })
 
   it('should create', () => {
+    fixture.detectChanges()
     expect(component).toBeTruthy()
   })
 
   it('should render mat-progress-bar', () => {
+    component.password = 'a'
+    fixture.detectChanges()
     const progressBar = fixture.nativeElement.querySelector('mat-progress-bar')
     expect(progressBar).toBeTruthy()
   })
 
   it('should bind progress input to mat-progress-bar value', () => {
-    component.passwordStrength = 50
+    component.password = 'Aa1!Aa1!'
     fixture.detectChanges()
 
     const progressBarDebug =
@@ -42,38 +44,32 @@ describe('PasswordStrengthComponent', () => {
       (el) => el.nativeElement.tagName.toLowerCase() === 'mat-progress-bar'
     )?.componentInstance
 
-    expect(matProgressBarInstance.value).toBe(50)
+    expect(matProgressBarInstance.value).toBe(100)
   })
 
   it('should apply correct class based on progress value', () => {
-    const progressBar = fixture.nativeElement.querySelector('mat-progress-bar')
+    const cases = [
+      { password: 'aaaaaaaa', expected: 'low-medium' },
+      { password: 'Aaaaaaaa', expected: 'medium' },
+      { password: 'Aaaaaaa1', expected: 'high-medium' },
+      { password: 'Aaaaaaa1!', expected: 'high' },
+      { password: 'Aa1!Aa1!', expected: 'high' }
+    ]
 
-    component.passwordStrength = 0
-    fixture.detectChanges()
-    expect(progressBar.classList).toContain('low')
-
-    component.passwordStrength = 20
-    fixture.detectChanges()
-    expect(progressBar.classList).toContain('low')
-
-    component.passwordStrength = 40
-    fixture.detectChanges()
-    expect(progressBar.classList).toContain('low-medium')
-
-    component.passwordStrength = 60
-    fixture.detectChanges()
-    expect(progressBar.classList).toContain('medium')
-
-    component.passwordStrength = 80
-    fixture.detectChanges()
-    expect(progressBar.classList).toContain('high-medium')
-
-    component.passwordStrength = 100
-    fixture.detectChanges()
-    expect(progressBar.classList).toContain('high')
+    for (const testCase of cases) {
+      fixture = TestBed.createComponent(PasswordStrengthComponent)
+      component = fixture.componentInstance
+      component.password = testCase.password
+      fixture.detectChanges()
+      const progressBar = fixture.nativeElement.querySelector('mat-progress-bar')
+      expect(progressBar.classList).toContain(testCase.expected)
+      fixture.destroy()
+    }
   })
 
   it('should have correct ARIA attributes for accessibility', () => {
+    component.password = 'a'
+    fixture.detectChanges()
     const progressBar = fixture.nativeElement.querySelector('mat-progress-bar')
     expect(progressBar.getAttribute('role')).toBe('progressbar')
     expect(progressBar.getAttribute('aria-valuemin')).toBe('0')
@@ -81,9 +77,9 @@ describe('PasswordStrengthComponent', () => {
   })
 
   it('should update aria-valuenow based on progress value', () => {
-    component.passwordStrength = 45
+    component.password = 'Aaaaaaa1'
     fixture.detectChanges()
     const progressBar = fixture.nativeElement.querySelector('mat-progress-bar')
-    expect(progressBar.getAttribute('aria-valuenow')).toBe('45')
+    expect(progressBar.getAttribute('aria-valuenow')).toBe('80')
   })
 })

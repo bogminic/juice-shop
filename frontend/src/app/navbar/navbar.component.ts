@@ -45,17 +45,16 @@ import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { LoginGuard } from '../app.guard'
 import { roles } from '../roles'
-import { MatDivider } from '@angular/material/divider'
-import { MatRadioButton } from '@angular/material/radio'
-
-import { MatMenuTrigger, MatMenu, MatMenuItem } from '@angular/material/menu'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatRadioModule } from '@angular/material/radio'
+import { MatMenuModule } from '@angular/material/menu'
 import { MatSearchBarComponent } from '../mat-search-bar/mat-search-bar.component'
 
 import { MatIconModule } from '@angular/material/icon'
-import { MatTooltip } from '@angular/material/tooltip'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatButtonModule } from '@angular/material/button'
 
-import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar'
+import { MatToolbarModule } from '@angular/material/toolbar'
 
 library.add(faLanguage, faSearch, faSignInAlt, faSignOutAlt, faComment, faBomb, faTrophy, faInfoCircle, faShoppingCart, faUserSecret, faRecycle, faMapMarker, faUserCircle, faGithub, faComments, faThermometerEmpty, faThermometerQuarter, faThermometerHalf, faThermometerThreeQuarters, faThermometerFull)
 
@@ -63,20 +62,18 @@ library.add(faLanguage, faSearch, faSignInAlt, faSignOutAlt, faComment, faBomb, 
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  standalone: true,
   imports: [
-    MatToolbar,
-    MatToolbarRow,
+    MatToolbarModule,
     MatButtonModule,
-    MatTooltip,
+    MatTooltipModule,
     MatIconModule,
     RouterLink,
     MatSearchBarComponent,
-    MatMenuTrigger,
-    MatMenu,
-    MatMenuItem,
-    MatRadioButton,
+    MatMenuModule,
+    MatRadioModule,
     TranslateModule,
-    MatDivider,
+    MatDividerModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule

@@ -10,7 +10,7 @@ import { CookieService } from 'ngy-cookie'
 import { SocketIoService } from '../Services/socket-io.service'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
-import { MatCardModule, MatCardContent } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card'
 
 interface HackingProgress {
   autoRestoreMessage: string | null
@@ -21,7 +21,8 @@ interface HackingProgress {
   selector: 'app-server-started-notification',
   templateUrl: './server-started-notification.component.html',
   styleUrls: ['./server-started-notification.component.scss'],
-  imports: [MatCardModule, MatCardContent, TranslateModule, MatButtonModule, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatButtonModule, MatIconModule]
 })
 export class ServerStartedNotificationComponent implements OnInit {
   private readonly ngZone = inject(NgZone)

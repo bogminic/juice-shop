@@ -5,22 +5,21 @@ import { MatDialog } from '@angular/material/dialog'
 import { ScoreBoardAdditionalSettingsDialogComponent } from './components/score-board-additional-settings-dialog/score-board-additional-settings-dialog.component'
 import { DifficultySelectionSummaryPipe } from './pipes/difficulty-selection-summary.pipe'
 import { CategoryFilterComponent } from './components/category-filter/category-filter.component'
-import { MatTooltip } from '@angular/material/tooltip'
-import { MatIconButton } from '@angular/material/button'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { DifficultyStarsComponent } from '../difficulty-stars/difficulty-stars.component'
-import { MatOption } from '@angular/material/core'
-
-import { MatSelect, MatSelectTrigger } from '@angular/material/select'
+import { MatSelectModule } from '@angular/material/select'
 import { MatInputModule } from '@angular/material/input'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
-import { MatFormFieldModule, MatPrefix, MatLabel } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'filter-settings',
   templateUrl: './filter-settings.component.html',
   styleUrls: ['./filter-settings.component.scss'],
-  imports: [MatFormFieldModule, MatIconModule, MatPrefix, MatLabel, TranslateModule, MatInputModule, MatSelect, MatSelectTrigger, MatOption, DifficultyStarsComponent, MatIconButton, MatTooltip, CategoryFilterComponent, DifficultySelectionSummaryPipe]
+  standalone: true,
+  imports: [MatFormFieldModule, MatIconModule, TranslateModule, MatInputModule, MatSelectModule, MatButtonModule, DifficultyStarsComponent, MatTooltipModule, CategoryFilterComponent, DifficultySelectionSummaryPipe]
 })
 export class FilterSettingsComponent implements OnChanges {
   private readonly dialog = inject(MatDialog)

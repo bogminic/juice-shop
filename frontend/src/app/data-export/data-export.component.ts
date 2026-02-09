@@ -10,8 +10,8 @@ import { DataSubjectService } from '../Services/data-subject.service'
 import { DomSanitizer } from '@angular/platform-browser'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { MatLabel, MatFormFieldModule, MatHint, MatError } from '@angular/material/form-field'
-import { MatRadioGroup, MatRadioButton } from '@angular/material/radio'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatRadioModule } from '@angular/material/radio'
 
 import { TranslateModule } from '@ngx-translate/core'
 import { MatCardModule } from '@angular/material/card'
@@ -22,7 +22,8 @@ import { MatIconModule } from '@angular/material/icon'
   selector: 'app-data-export',
   templateUrl: './data-export.component.html',
   styleUrls: ['./data-export.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatRadioGroup, FormsModule, ReactiveFormsModule, MatLabel, MatRadioButton, MatFormFieldModule, MatInputModule, MatHint, MatError, MatButtonModule, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatRadioModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule]
 })
 export class DataExportComponent implements OnInit {
   sanitizer = inject(DomSanitizer)

@@ -3,19 +3,19 @@ import { NgxTextDiffComponent, NgxTextDiffModule } from '@winarg/ngx-text-diff'
 
 import { CookieService } from 'ngy-cookie'
 import { type RandomFixes } from '../code-snippet/code-snippet.component'
-import { type DiffTableFormat } from '@winarg/ngx-text-diff/lib/ngx-text-diff.model'
 
 @Component({
   selector: 'app-code-fixes',
   templateUrl: './code-fixes.component.html',
   styleUrls: ['./code-fixes.component.scss'],
+  standalone: true,
   imports: [NgxTextDiffModule]
 })
 export class CodeFixesComponent implements OnInit, DoCheck {
   private readonly cookieService = inject(CookieService)
   private readonly differs = inject(KeyValueDiffers)
 
-  differ: KeyValueDiffer<string, DiffTableFormat>
+  differ: KeyValueDiffer<string, unknown>
 
   constructor () {
     const cookieService = this.cookieService
@@ -55,7 +55,7 @@ export class CodeFixesComponent implements OnInit, DoCheck {
       const change = this.differ.diff({ 'diff-format': this.codeComponent.format })
       if (change) {
         change.forEachChangedItem(item => {
-          this.format = item.currentValue
+          this.format = String(item.currentValue)
           this.cookieService.put('code-fixes-component-format', this.format)
         }
         )

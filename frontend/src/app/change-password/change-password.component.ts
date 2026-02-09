@@ -20,12 +20,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { MatButtonModule } from '@angular/material/button'
 
 import { MatInputModule } from '@angular/material/input'
-import {
-  MatFormFieldModule,
-  MatLabel,
-  MatError,
-  MatHint
-} from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatCardModule } from '@angular/material/card'
 
 library.add(faSave, faEdit)
@@ -34,16 +29,14 @@ library.add(faSave, faEdit)
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss'],
+  standalone: true,
   imports: [
     MatCardModule,
     TranslateModule,
     MatFormFieldModule,
-    MatLabel,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    MatError,
-    MatHint,
     MatButtonModule
   ]
 })

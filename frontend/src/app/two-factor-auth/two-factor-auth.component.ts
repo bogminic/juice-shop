@@ -16,11 +16,11 @@ import { forkJoin } from 'rxjs'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
-import { MatTooltip } from '@angular/material/tooltip'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatError, MatSuffix, MatHint } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 
 import { MatCardModule } from '@angular/material/card'
 import { QrCodeComponent } from 'ng-qrcode'
@@ -31,7 +31,8 @@ library.add(faUnlockAlt, faSave)
   selector: 'app-two-factor-auth',
   templateUrl: './two-factor-auth.component.html',
   styleUrls: ['./two-factor-auth.component.scss'],
-  imports: [MatCardModule, TranslateModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatLabel, MatInputModule, MatButtonModule, QrCodeComponent, MatError, MatIconModule, MatSuffix, MatTooltip, MatHint, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, QrCodeComponent, MatIconModule, MatTooltipModule]
 })
 export class TwoFactorAuthComponent implements OnInit {
   private readonly twoFactorAuthService = inject(TwoFactorAuthService)
@@ -51,8 +52,8 @@ export class TwoFactorAuthComponent implements OnInit {
     passwordControl: new UntypedFormControl('', [Validators.required])
   })
 
-  public setupStatus: boolean | null = null
-  public errored: boolean | null = null
+  public setupStatus = false
+  public errored = false
 
   public totpUrl?: string
   public totpSecret?: string
@@ -61,7 +62,7 @@ export class TwoFactorAuthComponent implements OnInit {
   private appName = 'OWASP Juice Shop'
 
   ngOnInit (): void {
-    this.updateStatus()
+    setTimeout(() => this.updateStatus(), 0)
   }
 
   updateStatus () {
@@ -70,14 +71,16 @@ export class TwoFactorAuthComponent implements OnInit {
 
     forkJoin([status, config]).subscribe({
       next: ([{ setup, email, secret, setupToken }, config]) => {
-        this.setupStatus = setup
-        this.appName = config.application.name
-        if (!setup) {
-          const encodedAppName = encodeURIComponent(this.appName)
-          this.totpUrl = `otpauth://totp/${encodedAppName}:${email}?secret=${secret}&issuer=${encodedAppName}`
-          this.totpSecret = secret
-          this.setupToken = setupToken
-        }
+        setTimeout(() => {
+          this.setupStatus = setup
+          this.appName = config.application.name
+          if (!setup) {
+            const encodedAppName = encodeURIComponent(this.appName)
+            this.totpUrl = `otpauth://totp/${encodedAppName}:${email}?secret=${secret}&issuer=${encodedAppName}`
+            this.totpSecret = secret
+            this.setupToken = setupToken
+          }
+        }, 0)
       },
       error: () => {
         console.log('Failed to fetch 2fa status')
@@ -93,13 +96,17 @@ export class TwoFactorAuthComponent implements OnInit {
       this.setupToken
     ).subscribe({
       next: () => {
-        this.setupStatus = true
+        setTimeout(() => {
+          this.setupStatus = true
+        }, 0)
         this.snackBarHelperService.open('CONFIRM_2FA_SETUP')
       },
       error: () => {
-        this.twoFactorSetupForm.get('passwordControl')?.markAsPristine()
-        this.twoFactorSetupForm.get('initialTokenControl')?.markAsPristine()
-        this.errored = true
+        setTimeout(() => {
+          this.twoFactorSetupForm.get('passwordControl')?.markAsPristine()
+          this.twoFactorSetupForm.get('initialTokenControl')?.markAsPristine()
+          this.errored = true
+        }, 0)
       }
     })
   }
@@ -109,16 +116,14 @@ export class TwoFactorAuthComponent implements OnInit {
       this.twoFactorDisableForm.get('passwordControl')?.value
     ).subscribe({
       next: () => {
-        this.updateStatus().subscribe(
-          () => {
-            this.setupStatus = false
-          }
-        )
+        this.updateStatus().subscribe()
         this.snackBarHelperService.open('CONFIRM_2FA_DISABLE')
       },
       error: () => {
-        this.twoFactorDisableForm.get('passwordControl')?.markAsPristine()
-        this.errored = true
+        setTimeout(() => {
+          this.twoFactorDisableForm.get('passwordControl')?.markAsPristine()
+          this.errored = true
+        }, 0)
       }
     })
   }

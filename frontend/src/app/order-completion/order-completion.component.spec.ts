@@ -29,6 +29,11 @@ export class MockActivatedRoute {
   public paramMap = of(convertToParamMap({
     id: 'ad9b-96017e7cb1ae7bf9'
   }))
+  public snapshot = {
+    paramMap: convertToParamMap({
+      id: 'ad9b-96017e7cb1ae7bf9'
+    })
+  }
 }
 
 describe('OrderCompletionComponent', () => {
@@ -78,7 +83,6 @@ describe('OrderCompletionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OrderCompletionComponent)
     component = fixture.componentInstance
-    component.ngOnInit()
     fixture.detectChanges()
   })
 
@@ -88,7 +92,8 @@ describe('OrderCompletionComponent', () => {
 
   it('should hold order details returned by backend API', () => {
     trackOrderService.find.and.returnValue(of({ data: [{ totalPrice: 2.88, promotionalAmount: 10, deliveryPrice: 2, addressId: 1, paymentId: 1, products: [{ quantity: 1, name: 'Apple Juice (1000ml)', price: 1.99, total: 1.99, bonus: 0 }, { quantity: 1, name: 'Apple Pomace', price: 0.89, total: 0.89, bonus: 0 }], bonus: 0, eta: '5' }] }))
-    component.ngOnInit()
+    fixture = TestBed.createComponent(OrderCompletionComponent)
+    component = fixture.componentInstance
     fixture.detectChanges()
     expect(component.promotionalDiscount).toBe(10)
     expect(component.deliveryPrice).toBe(2)
@@ -106,42 +111,54 @@ describe('OrderCompletionComponent', () => {
   it('should have bullet point list of products in tweet', () => {
     trackOrderService.find.and.returnValue(of({ data: [{ products: [{ name: 'A' }, { name: 'B' }] }] }))
     configurationService.getApplicationConfiguration.and.returnValue(of({ }))
-    component.ngOnInit()
+    fixture = TestBed.createComponent(OrderCompletionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
     expect(component.tweetText).toBe('I just purchased%0a- A%0a- B')
   })
 
   it('should truncate tweet text if it exceeds 140 characters', () => {
     trackOrderService.find.and.returnValue(of({ data: [{ products: [{ name: 'AAAAAAAAAAAAAAAAAAAA' }, { name: 'BBBBBBBBBBBBBBBBBBBB' }, { name: 'CCCCCCCCCCCCCCCCCCCC' }, { name: 'DDDDDDDDDDDDDDDDDDDD' }, { name: 'EEEEEEEEEEEEEEEEEEEE' }, { name: 'FFFFFFFFFFFFFFFFFFFF' }] }] }))
     configurationService.getApplicationConfiguration.and.returnValue(of({ }))
-    component.ngOnInit()
+    fixture = TestBed.createComponent(OrderCompletionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
     expect(component.tweetText).toBe('I just purchased%0a- AAAAAAAAAAAAAAAAAAAA%0a- BBBBBBBBBBBBBBBBBBBB%0a- CCCCCCCCCCCCCCCCCCCC%0a- DDDDDDDDDDDDDDDDDDDD%0a- EEEEEEEEEEEEEEEEEEE...')
   })
 
   it('should derive twitter handle from twitter URL if configured', () => {
     trackOrderService.find.and.returnValue(of({ data: [{ products: [] }] }))
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: { social: { twitterUrl: 'https://twitter.com/bkimminich' } } }))
-    component.ngOnInit()
+    fixture = TestBed.createComponent(OrderCompletionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
     expect(component.tweetText).toBe('I just purchased%0afrom @bkimminich')
   })
 
   it('should append twitter handle to truncated tweet text', () => {
     trackOrderService.find.and.returnValue(of({ data: [{ products: [{ name: 'AAAAAAAAAAAAAAAAAAAA' }, { name: 'BBBBBBBBBBBBBBBBBBBB' }, { name: 'CCCCCCCCCCCCCCCCCCCC' }, { name: 'DDDDDDDDDDDDDDDDDDDD' }, { name: 'EEEEEEEEEEEEEEEEEEEE' }, { name: 'FFFFFFFFFFFFFFFFFFFF' }] }] }))
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: { social: { twitterUrl: 'https://twitter.com/owasp_juiceshop' } } }))
-    component.ngOnInit()
+    fixture = TestBed.createComponent(OrderCompletionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
     expect(component.tweetText).toBe('I just purchased%0a- AAAAAAAAAAAAAAAAAAAA%0a- BBBBBBBBBBBBBBBBBBBB%0a- CCCCCCCCCCCCCCCCCCCC%0a- DDDDDDDDDDDDDDDDDDDD%0a- EEEEEEEEEEEEEEEEEEE...%0afrom @owasp_juiceshop')
   })
 
   it('should use configured URL as is if it is not a twitter URL', () => {
     trackOrderService.find.and.returnValue(of({ data: [{ products: [] }] }))
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: { social: { twitterUrl: 'http://localhorst:42' } } }))
-    component.ngOnInit()
+    fixture = TestBed.createComponent(OrderCompletionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
     expect(component.tweetText).toBe('I just purchased%0afrom http://localhorst:42')
   })
 
   it('should use configured application name as a fallback for missing twitter URL', () => {
     trackOrderService.find.and.returnValue(of({ data: [{ products: [] }] }))
     configurationService.getApplicationConfiguration.and.returnValue(of({ application: { name: 'OWASP Juice Shop', social: { twitterUrl: null } } }))
-    component.ngOnInit()
+    fixture = TestBed.createComponent(OrderCompletionComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
     expect(component.tweetText).toBe('I just purchased%0afrom OWASP Juice Shop')
   })
 

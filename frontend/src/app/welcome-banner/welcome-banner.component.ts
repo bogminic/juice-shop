@@ -10,14 +10,15 @@ import { CookieService } from 'ngy-cookie'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { MatIconModule } from '@angular/material/icon'
-import { MatTooltip } from '@angular/material/tooltip'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatButtonModule } from '@angular/material/button'
 
 @Component({
   selector: 'app-welcome-banner',
   templateUrl: 'welcome-banner.component.html',
   styleUrls: ['./welcome-banner.component.scss'],
-  imports: [MatButtonModule, MatTooltip, MatIconModule, TranslateModule]
+  standalone: true,
+  imports: [MatButtonModule, MatTooltipModule, MatIconModule, TranslateModule]
 })
 export class WelcomeBannerComponent implements OnInit {
   dialogRef = inject<MatDialogRef<WelcomeBannerComponent>>(MatDialogRef)

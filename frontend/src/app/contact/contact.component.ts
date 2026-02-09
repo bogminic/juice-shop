@@ -17,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatSliderModule } from '@angular/material/slider'
 
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatHint, MatError } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatCardModule } from '@angular/material/card'
 
 import { MatIconModule } from '@angular/material/icon'
@@ -28,7 +28,8 @@ library.add(faStar, faPaperPlane)
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
-  imports: [MatCardModule, TranslateModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatLabel, MatInputModule, MatHint, MatError, MatSliderModule, MatButtonModule, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSliderModule, MatButtonModule, MatIconModule]
 })
 export class ContactComponent implements OnInit {
   private readonly userService = inject(UserService)

@@ -7,15 +7,15 @@ import { UserDetailsComponent } from '../user-details/user-details.component'
 import { FeedbackDetailsComponent } from '../feedback-details/feedback-details.component'
 import { MatDialog } from '@angular/material/dialog'
 import { FeedbackService } from '../Services/feedback.service'
-import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { UserService } from '../Services/user.service'
 import { Component, type OnInit, ViewChild, inject } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArchive, faEye, faHome, faTrashAlt, faUser } from '@fortawesome/free-solid-svg-icons'
-import { MatPaginator } from '@angular/material/paginator'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { MatIconModule } from '@angular/material/icon'
-import { MatTooltip } from '@angular/material/tooltip'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatButtonModule } from '@angular/material/button'
 
 import { TranslateModule } from '@ngx-translate/core'
@@ -27,7 +27,8 @@ library.add(faUser, faEye, faHome, faArchive, faTrashAlt)
   selector: 'app-administration',
   templateUrl: './administration.component.html',
   styleUrls: ['./administration.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatButtonModule, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatTooltip, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatTableModule, MatButtonModule, MatPaginatorModule, MatTooltipModule, MatIconModule]
 })
 export class AdministrationComponent implements OnInit {
   private readonly dialog = inject(MatDialog)

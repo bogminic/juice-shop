@@ -72,13 +72,13 @@ describe('ProductDetailsComponent', () => {
         provideHttpClientTesting()
       ]
     })
+      .overrideProvider(MatDialog, { useValue: dialog })
       .compileComponents()
   }))
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductDetailsComponent)
     component = fixture.componentInstance
-    fixture.autoDetectChanges()
   })
 
   it('should create', () => {
@@ -89,6 +89,7 @@ describe('ProductDetailsComponent', () => {
     component.data = { productData: { id: 42 } as Product }
     userService.whoAmI.and.returnValue(of({}))
     component.ngOnInit()
+    fixture.detectChanges()
     const textArea: HTMLTextAreaElement = fixture.debugElement.query(By.css('textarea')).nativeElement
     textArea.value = 'Great product!'
     const buttonDe = fixture.debugElement.query(By.css('#submitButton'))
@@ -103,6 +104,7 @@ describe('ProductDetailsComponent', () => {
     component.data = { productData: { id: 42 } as Product }
     userService.whoAmI.and.returnValue(of({ email: 'horst@juice-sh.op' }))
     component.ngOnInit()
+    fixture.detectChanges()
     const textArea: HTMLTextAreaElement = fixture.debugElement.query(By.css('textarea')).nativeElement
     textArea.value = 'Great product!'
     const buttonDe = fixture.debugElement.query(By.css('#submitButton'))
@@ -118,6 +120,7 @@ describe('ProductDetailsComponent', () => {
     userService.whoAmI.and.returnValue(throwError('Error'))
     console.log = jasmine.createSpy('log')
     component.ngOnInit()
+    fixture.detectChanges()
     expect(console.log).toHaveBeenCalledWith('Error')
   }))
 
@@ -127,6 +130,7 @@ describe('ProductDetailsComponent', () => {
     productReviewService.create.and.returnValue(throwError('Error'))
     console.log = jasmine.createSpy('log')
     component.ngOnInit()
+    fixture.detectChanges()
     const textArea: HTMLTextAreaElement = fixture.debugElement.query(By.css('textarea')).nativeElement
     textArea.value = 'Great product!'
     const buttonDe = fixture.debugElement.query(By.css('#submitButton'))
@@ -142,6 +146,7 @@ describe('ProductDetailsComponent', () => {
     productReviewService.get.and.returnValue(of([{ id: '42', message: 'Review 1', author: 'Anonymous' }]))
     userService.whoAmI.and.returnValue(of({}))
     component.ngOnInit()
+    fixture.detectChanges()
     const textArea: HTMLTextAreaElement = fixture.debugElement.query(By.css('textarea')).nativeElement
     textArea.value = 'Great product!'
     const buttonDe = fixture.debugElement.query(By.css('#submitButton'))

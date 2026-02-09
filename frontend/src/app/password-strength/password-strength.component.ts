@@ -4,7 +4,7 @@
  */
 
 import { NgClass } from '@angular/common'
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
 
 @Component({
@@ -14,18 +14,22 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
   styleUrl: './password-strength.component.scss'
 })
 
-export class PasswordStrengthComponent implements OnChanges {
-  @Input() password = ''
-  passwordStrength = 0
+export class PasswordStrengthComponent {
+  private _password = ''
+  public passwordStrength = 0
+
+  @Input()
+  set password (value: string) {
+    this._password = value ?? ''
+    this.passwordStrength = this.calculatePasswordStrength()
+  }
+
+  get password (): string {
+    return this._password
+  }
   minLength = 8
 
   private readonly ranges = ['low', 'low-medium', 'medium', 'high-medium', 'high']
-
-  ngOnChanges (changes: SimpleChanges): void {
-    if (changes.password) {
-      this.passwordStrength = this.calculatePasswordStrength()
-    }
-  }
 
   private calculatePasswordStrength (): number {
     const checks = [
@@ -44,22 +48,22 @@ export class PasswordStrengthComponent implements OnChanges {
   }
 
   get containAtLeastMinChars (): boolean {
-    return this.password.length >= 8
+    return this._password.length >= 8
   }
 
   get containAtLeastOneLowerCaseLetter (): boolean {
-    return /^(?=.*?[a-z])/.test(this.password)
+    return /^(?=.*?[a-z])/.test(this._password)
   }
 
   get containAtLeastOneUpperCaseLetter (): boolean {
-    return /^(?=.*?[A-Z])/.test(this.password)
+    return /^(?=.*?[A-Z])/.test(this._password)
   }
 
   get containAtLeastOneDigit (): boolean {
-    return /^(?=.*?[0-9])/.test(this.password)
+    return /^(?=.*?[0-9])/.test(this._password)
   }
 
   get containAtLeastOneSpecialChar (): boolean {
-    return /^(?=.*?[" !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"])/.test(this.password)
+    return /^(?=.*?[" !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~"])/.test(this._password)
   }
 }

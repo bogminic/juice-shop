@@ -15,13 +15,13 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { FormSubmitService } from '../Services/form-submit.service'
 import { ConfigurationService } from '../Services/configuration.service'
 import { BasketService } from '../Services/basket.service'
-import { MatCheckbox } from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatIconModule } from '@angular/material/icon'
-import { MatTooltip } from '@angular/material/tooltip'
-import { MatIconButton, MatButtonModule } from '@angular/material/button'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatFormFieldModule, MatLabel, MatError, MatSuffix } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 
 import { MatCardModule } from '@angular/material/card'
 
@@ -33,7 +33,8 @@ const oauthProviderUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [MatCardModule, MatFormFieldModule, MatLabel, TranslateModule, MatInputModule, FormsModule, ReactiveFormsModule, MatError, MatIconButton, MatSuffix, MatTooltip, RouterLink, MatButtonModule, MatIconModule, MatCheckbox]
+  standalone: true,
+  imports: [MatCardModule, MatFormFieldModule, TranslateModule, MatInputModule, FormsModule, ReactiveFormsModule, MatTooltipModule, RouterLink, MatButtonModule, MatIconModule, MatCheckboxModule]
 })
 
 export class LoginComponent implements OnInit {

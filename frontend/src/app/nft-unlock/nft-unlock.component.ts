@@ -1,20 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core'
 import { KeysService } from '../Services/keys.service'
-import { MatDivider } from '@angular/material/divider'
+import { MatDividerModule } from '@angular/material/divider'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { FormsModule } from '@angular/forms'
 
 import { TranslateModule } from '@ngx-translate/core'
 import { MatButtonModule } from '@angular/material/button'
 
-import { MatCardModule, MatCardTitle } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card'
+import { catchError } from 'rxjs/operators'
+import { of } from 'rxjs'
 
 @Component({
   selector: 'app-nft-unlock',
   templateUrl: './nft-unlock.component.html',
   styleUrls: ['./nft-unlock.component.scss'],
-  imports: [MatCardModule, MatButtonModule, TranslateModule, MatCardTitle, FormsModule, MatFormFieldModule, MatLabel, MatInputModule, MatDivider]
+  standalone: true,
+  imports: [MatCardModule, MatButtonModule, TranslateModule, FormsModule, MatFormFieldModule, MatInputModule, MatDividerModule]
 })
 export class NFTUnlockComponent implements OnInit {
   private readonly keysService = inject(KeysService)
@@ -34,17 +37,15 @@ export class NFTUnlockComponent implements OnInit {
   }
 
   checkChallengeStatus () {
-    this.keysService.nftUnlocked().subscribe({
-      next:
-      (response) => {
-        this.successResponse = response.status
-      },
-      error: (error) => {
-        console.error(error)
+    this.keysService.nftUnlocked()
+      .pipe(catchError((error) => {
+        console.log(error)
         this.successResponse = false
-      }
-    }
-    )
+        return of({ status: false })
+      }))
+      .subscribe((response) => {
+        this.successResponse = response.status
+      })
   }
 
   submitForm () {

@@ -30,7 +30,7 @@ describe('WalletComponent', () => {
 
   beforeEach(waitForAsync(() => {
     walletService = jasmine.createSpyObj('AddressService', ['get', 'put'])
-    walletService.get.and.returnValue(of({}))
+    walletService.get.and.returnValue(of(0))
     walletService.put.and.returnValue(of({}))
     translateService = jasmine.createSpyObj('TranslateService', ['get'])
     translateService.get.and.returnValue(of({}))
@@ -88,8 +88,11 @@ describe('WalletComponent', () => {
 
   it('should hold balance returned by backend API', () => {
     walletService.get.and.returnValue(of(100))
-    component.ngOnInit()
+
+    fixture = TestBed.createComponent(WalletComponent)
+    component = fixture.componentInstance
     fixture.detectChanges()
+
     expect(component.balance).toBe('100.00')
   })
 

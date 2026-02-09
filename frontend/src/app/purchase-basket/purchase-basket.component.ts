@@ -12,9 +12,8 @@ import { faMinusSquare, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
 import { DeluxeGuard } from '../app.guard'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatIconButton } from '@angular/material/button'
-
-import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatFooterCellDef, MatFooterCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow } from '@angular/material/table'
+import { MatButtonModule } from '@angular/material/button'
+import { MatTableModule } from '@angular/material/table'
 
 library.add(faTrashAlt, faMinusSquare, faPlusSquare)
 
@@ -22,7 +21,8 @@ library.add(faTrashAlt, faMinusSquare, faPlusSquare)
   selector: 'app-purchase-basket',
   templateUrl: './purchase-basket.component.html',
   styleUrls: ['./purchase-basket.component.scss'],
-  imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatFooterCellDef, MatFooterCell, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatFooterRowDef, MatFooterRow, TranslateModule]
+  standalone: true,
+  imports: [MatTableModule, MatButtonModule, TranslateModule]
 })
 export class PurchaseBasketComponent implements OnInit {
   private readonly deluxeGuard = inject(DeluxeGuard)

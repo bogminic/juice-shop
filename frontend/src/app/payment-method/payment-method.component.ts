@@ -6,17 +6,17 @@
 import { UntypedFormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { Component, EventEmitter, Input, type OnInit, Output, inject } from '@angular/core'
 import { PaymentService } from '../Services/payment.service'
-import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons/'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatError, MatHint } from '@angular/material/form-field'
-import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion'
-import { MatIconButton, MatButtonModule } from '@angular/material/button'
-import { MatRadioButton } from '@angular/material/radio'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatExpansionModule } from '@angular/material/expansion'
+import { MatButtonModule } from '@angular/material/button'
+import { MatRadioModule } from '@angular/material/radio'
 
 import { MatIconModule } from '@angular/material/icon'
 
@@ -26,7 +26,8 @@ library.add(faPaperPlane, faTrashAlt)
   selector: 'app-payment-method',
   templateUrl: './payment-method.component.html',
   styleUrls: ['./payment-method.component.scss'],
-  imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatRadioButton, MatIconButton, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatFormFieldModule, MatLabel, TranslateModule, MatInputModule, FormsModule, ReactiveFormsModule, MatError, MatHint, MatButtonModule, MatIconModule]
+  standalone: true,
+  imports: [MatTableModule, MatRadioModule, MatExpansionModule, MatFormFieldModule, TranslateModule, MatInputModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule]
 })
 
 export class PaymentMethodComponent implements OnInit {

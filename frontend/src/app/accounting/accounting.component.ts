@@ -5,19 +5,19 @@
 
 import { ProductService } from '../Services/product.service'
 import { type AfterViewInit, Component, type OnDestroy, ViewChild, inject } from '@angular/core'
-import { MatPaginator } from '@angular/material/paginator'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { type Subscription } from 'rxjs'
-import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { QuantityService } from '../Services/quantity.service'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 import { OrderHistoryService } from '../Services/order-history.service'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatSuffix } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
-import { MatTooltip } from '@angular/material/tooltip'
-import { MatIconButton } from '@angular/material/button'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatButtonModule } from '@angular/material/button'
 
 import { TranslateModule } from '@ngx-translate/core'
 import { MatCardModule } from '@angular/material/card'
@@ -35,7 +35,8 @@ interface Order {
   selector: 'app-accounting',
   templateUrl: './accounting.component.html',
   styleUrls: ['./accounting.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatTooltip, MatIconModule, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatFormFieldModule, MatInputModule, MatSuffix]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatTableModule, MatButtonModule, MatTooltipModule, MatIconModule, MatPaginatorModule, MatFormFieldModule, MatInputModule]
 })
 export class AccountingComponent implements AfterViewInit, OnDestroy {
   private readonly productService = inject(ProductService)

@@ -12,7 +12,7 @@ import { faCommentAlt as farCommentAlt, faComments as farComments } from '@forta
 import { MatButtonModule } from '@angular/material/button'
 import { TranslateModule } from '@ngx-translate/core'
 
-import { MatCardModule, MatCardHeader, MatCardTitle, MatCardSubtitle } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card'
 
 library.add(faBitcoin, faUniversity, faGraduationCap, faCommentAlt, faComments, farCommentAlt, farComments)
 
@@ -20,7 +20,8 @@ library.add(faBitcoin, faUniversity, faGraduationCap, faCommentAlt, faComments, 
   selector: 'app-token-sale',
   templateUrl: './token-sale.component.html',
   styleUrls: ['./token-sale.component.scss'],
-  imports: [MatCardModule, MatCardHeader, MatCardTitle, MatCardSubtitle, TranslateModule, MatButtonModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatButtonModule]
 })
 export class TokenSaleComponent implements OnInit {
   private readonly configurationService = inject(ConfigurationService)

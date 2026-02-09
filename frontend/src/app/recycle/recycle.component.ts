@@ -15,13 +15,13 @@ import { AddressComponent } from '../address/address.component'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 import { MatButtonModule } from '@angular/material/button'
-import { MatCheckbox } from '@angular/material/checkbox'
-import { MatDatepickerInput, MatDatepickerToggle, MatDatepicker } from '@angular/material/datepicker'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatDatepickerModule } from '@angular/material/datepicker'
 
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatError, MatSuffix } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 
-import { MatCardModule, MatCardImage, MatCardContent } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card'
 
 library.add(faPaperPlane)
 
@@ -29,7 +29,8 @@ library.add(faPaperPlane)
   selector: 'app-recycle',
   templateUrl: './recycle.component.html',
   styleUrls: ['./recycle.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatFormFieldModule, MatLabel, MatInputModule, FormsModule, ReactiveFormsModule, MatError, AddressComponent, MatDatepickerInput, MatDatepickerToggle, MatSuffix, MatDatepicker, MatCheckbox, MatButtonModule, MatCardImage, MatCardContent]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, AddressComponent, MatDatepickerModule, MatCheckboxModule, MatButtonModule]
 })
 export class RecycleComponent implements OnInit {
   private readonly recycleService = inject(RecycleService)

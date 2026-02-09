@@ -13,7 +13,7 @@ import { Challenge } from '../Models/challenge.model'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { MatIconModule } from '@angular/material/icon'
-import { MatTooltip } from '@angular/material/tooltip'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatButtonModule } from '@angular/material/button'
 
 library.add(faWindows)
@@ -22,7 +22,8 @@ library.add(faWindows)
   selector: 'app-challenge-status-badge',
   templateUrl: './challenge-status-badge.component.html',
   styleUrls: ['./challenge-status-badge.component.scss'],
-  imports: [MatButtonModule, MatTooltip, MatIconModule, TranslateModule]
+  standalone: true,
+  imports: [MatButtonModule, MatTooltipModule, MatIconModule, TranslateModule]
 })
 export class ChallengeStatusBadgeComponent {
   private readonly challengeService = inject(ChallengeService)

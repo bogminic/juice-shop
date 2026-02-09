@@ -13,7 +13,7 @@ import {
   solidityCompiler
 } from 'solidity-browser-compiler'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { TranslateModule } from '@ngx-translate/core'
 
 import { MatButtonModule } from '@angular/material/button'
@@ -42,7 +42,8 @@ const compilerReleases = {
   selector: 'app-web3-sandbox',
   templateUrl: './web3-sandbox.component.html',
   styleUrls: ['./web3-sandbox.component.scss'],
-  imports: [CodemirrorModule, FormsModule, MatButtonModule, MatIconModule, TranslateModule, MatFormFieldModule, MatLabel, MatInputModule]
+  standalone: true,
+  imports: [CodemirrorModule, FormsModule, MatButtonModule, MatIconModule, TranslateModule, MatFormFieldModule, MatInputModule]
 })
 export class Web3SandboxComponent implements OnInit {
   private readonly keysService = inject(KeysService)

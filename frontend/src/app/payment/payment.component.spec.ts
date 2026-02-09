@@ -304,7 +304,6 @@ describe('PaymentComponent', () => {
     userService.upgradeToDeluxe.and.returnValue(throwError('Error'))
     console.log = jasmine.createSpy('log')
     component.choosePayment()
-    fixture.detectChanges()
     expect(console.log).toHaveBeenCalledWith('Error')
   }))
 

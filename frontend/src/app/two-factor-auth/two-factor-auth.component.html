@@ -19,7 +19,9 @@
             (ngSubmit)="disable()"
             >
             <h2 id="two-factor-auth-disable-title" translate>REMOVE_TWO_FACTOR_AUTH</h2>
-            <div class="error" [hidden]="!(errored && !twoFactorDisableForm.dirty)" translate>2FA_SETUP_ERROR</div>
+            @if (errored && !twoFactorDisableForm.dirty) {
+              <div class="error" translate>2FA_SETUP_ERROR</div>
+            }
             <mat-form-field appearance="outline" color="accent">
               <mat-label translate>LABEL_CURRENT_PASSWORD</mat-label>
               <input id="currentPasswordDisable" formControlName="passwordControl" type="password" matInput
@@ -55,7 +57,9 @@
               [errorCorrectionLevel]="'L'"
             ></qr-code>
           </div>
-          <div class="error" [hidden]="!(errored && !twoFactorSetupForm.dirty)" translate>2FA_SETUP_ERROR</div>
+          @if (errored && !twoFactorSetupForm.dirty) {
+            <div class="error" translate>2FA_SETUP_ERROR</div>
+          }
           <mat-form-field appearance="outline" color="accent">
             <mat-label translate>LABEL_CURRENT_PASSWORD</mat-label>
             <input id="currentPasswordSetup" formControlName="passwordControl" type="password" matInput
@@ -66,7 +70,6 @@
           <mat-form-field appearance="outline" color="accent">
             <mat-label translate>INITIAL_CODE</mat-label>
             <input
-              #initToken
               id="initialToken"
               formControlName="initialTokenControl"
               type="text"
@@ -82,7 +85,7 @@
               aria-label="The token to be entered from the authenticator must have 6 digits.">
               help_outline
             </mat-icon>
-            <mat-hint align="end">{{initToken.value?.length || 0}}/6</mat-hint>
+            <mat-hint align="end">{{twoFactorSetupForm.get('initialTokenControl')?.value?.length || 0}}/6</mat-hint>
           </mat-form-field>
           <button
             type="submit"

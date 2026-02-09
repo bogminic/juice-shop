@@ -15,7 +15,7 @@ import { FormSubmitService } from '../Services/form-submit.service'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatHint, MatError } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 
 import { MatCardModule } from '@angular/material/card'
 
@@ -27,7 +27,8 @@ library.add(faBomb)
   selector: 'app-complaint',
   templateUrl: './complaint.component.html',
   styleUrls: ['./complaint.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatFormFieldModule, MatLabel, MatInputModule, FormsModule, ReactiveFormsModule, MatHint, MatError, FileUploadModule, MatButtonModule, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, FileUploadModule, MatButtonModule, MatIconModule]
 })
 export class ComplaintComponent implements OnInit {
   private readonly userService = inject(UserService)

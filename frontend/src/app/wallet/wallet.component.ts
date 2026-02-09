@@ -10,7 +10,7 @@ import { Router } from '@angular/router'
 import { MatButtonModule } from '@angular/material/button'
 
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatError } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatCardModule } from '@angular/material/card'
 import { MatIconModule } from '@angular/material/icon'
@@ -19,7 +19,8 @@ import { MatIconModule } from '@angular/material/icon'
   selector: 'app-wallet',
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatFormFieldModule, MatLabel, FormsModule, MatInputModule, ReactiveFormsModule, MatError, MatButtonModule, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatFormFieldModule, FormsModule, MatInputModule, ReactiveFormsModule, MatButtonModule, MatIconModule]
 })
 export class WalletComponent implements OnInit {
   private readonly router = inject(Router)

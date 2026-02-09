@@ -25,7 +25,7 @@ describe('ChallengeCard', () => {
     hackingInstructor: { isEnabled: true }
   } as Config
 
-  async function setup () {
+  async function setup (challengeOverrides: Record<string, unknown> = {}) {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), MatIconModule, MatTooltipModule, ChallengeCardComponent]
     })
@@ -34,7 +34,7 @@ describe('ChallengeCard', () => {
     fixture = TestBed.createComponent(ChallengeCardComponent)
     component = fixture.componentInstance
 
-    component.challenge = { ...defaultChallenge } as any
+    component.challenge = { ...defaultChallenge, ...challengeOverrides } as any
     component.applicationConfiguration = defaultAppConfig
 
     fixture.detectChanges()
@@ -47,31 +47,25 @@ describe('ChallengeCard', () => {
     return codeTag
   }
 
-  beforeEach(async () => {
+  it('should create', async () => {
     await setup()
-  })
-
-  it('should create', () => {
     expect(component).toBeTruthy()
   })
 
-  it('should not show a mitigation link when challenge has it but is not solved', () => {
-    component.challenge.solved = false
-    component.challenge.mitigationUrl = 'https://owasp.example.com'
-    fixture.detectChanges()
+  it('should not show a mitigation link when challenge has it but is not solved', async () => {
+    await setup({ solved: false, mitigationUrl: 'https://owasp.example.com' })
     expect(fixture.nativeElement.querySelector('[aria-label="Vulnerability mitigation link"]'))
       .toBeFalsy()
   })
 
-  it('should show a mitigation link when challenge has it and is solved', () => {
-    component.challenge.solved = true
-    component.challenge.mitigationUrl = 'https://owasp.example.com'
-    fixture.detectChanges()
+  it('should show a mitigation link when challenge has it and is solved', async () => {
+    await setup({ solved: true, mitigationUrl: 'https://owasp.example.com' })
     expect(fixture.nativeElement.querySelector('[aria-label="Vulnerability mitigation link"]'))
       .toBeTruthy()
   })
 
   it('should copy payload to clipboard and show confirmation', async () => {
+    await setup()
     const codeTag = appendCodeToFixture('javascript:alert(`xss`)')
 
     const mockClipboard = {
@@ -92,6 +86,7 @@ describe('ChallengeCard', () => {
   })
 
   it('should do nothing when no code element is present', async () => {
+    await setup()
     const existingCodeTag = fixture.nativeElement.querySelector('code')
     if (existingCodeTag) existingCodeTag.remove()
 
@@ -113,6 +108,7 @@ describe('ChallengeCard', () => {
   })
 
   it('should handle unavailable clipboard gracefully', async () => {
+    await setup()
     const codeTag = appendCodeToFixture('javascript:alert(`xss`)')
 
     Object.defineProperty(navigator, 'clipboard', { value: undefined, writable: true })

@@ -5,7 +5,7 @@
 
 import { Component, NgZone, type OnInit, inject } from '@angular/core'
 import { OrderHistoryService } from '../Services/order-history.service'
-import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { BasketService } from '../Services/basket.service'
 import { ProductDetailsComponent } from '../product-details/product-details.component'
 import { MatDialog } from '@angular/material/dialog'
@@ -13,11 +13,11 @@ import { type Product } from '../Models/product.model'
 import { ProductService } from '../Services/product.service'
 import { Router } from '@angular/router'
 import { MatIconModule } from '@angular/material/icon'
-import { MatTooltip } from '@angular/material/tooltip'
-import { MatIconButton } from '@angular/material/button'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatButtonModule } from '@angular/material/button'
 import { TranslateModule } from '@ngx-translate/core'
 
-import { MatCardModule, MatCardTitle, MatCardContent } from '@angular/material/card'
+import { MatCardModule } from '@angular/material/card'
 
 export interface StrippedProduct {
   id: number
@@ -39,7 +39,8 @@ export interface Order {
   selector: 'app-order-history',
   templateUrl: './order-history.component.html',
   styleUrls: ['./order-history.component.scss'],
-  imports: [MatCardModule, MatCardTitle, TranslateModule, MatIconButton, MatTooltip, MatIconModule, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatCardContent]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatButtonModule, MatTooltipModule, MatIconModule, MatTableModule]
 })
 export class OrderHistoryComponent implements OnInit {
   private readonly router = inject(Router)

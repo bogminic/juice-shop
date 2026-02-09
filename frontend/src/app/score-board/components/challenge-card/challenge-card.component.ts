@@ -3,7 +3,7 @@ import { EnrichedChallenge } from '../../types/EnrichedChallenge'
 import { Config } from 'src/app/Services/configuration.service'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatIconModule } from '@angular/material/icon'
-import { MatTooltip } from '@angular/material/tooltip'
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip'
 import { NgClass } from '@angular/common'
 import { DifficultyStarsComponent } from '../difficulty-stars/difficulty-stars.component'
 import { SnackBarHelperService } from 'src/app/Services/snack-bar-helper.service'
@@ -12,7 +12,8 @@ import { SnackBarHelperService } from 'src/app/Services/snack-bar-helper.service
   selector: 'challenge-card',
   templateUrl: './challenge-card.component.html',
   styleUrls: ['./challenge-card.component.scss'],
-  imports: [DifficultyStarsComponent, MatTooltip, MatIconModule, NgClass, TranslateModule]
+  standalone: true,
+  imports: [DifficultyStarsComponent, MatTooltipModule, MatIconModule, NgClass, TranslateModule]
 })
 export class ChallengeCardComponent implements OnInit, OnChanges {
   private readonly snackBarHelperService = inject(SnackBarHelperService)

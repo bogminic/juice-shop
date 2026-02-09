@@ -33,11 +33,11 @@ import { Location } from '@angular/common'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 import { MatIconModule } from '@angular/material/icon'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatHint, MatError } from '@angular/material/form-field'
-import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription } from '@angular/material/expansion'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatExpansionModule } from '@angular/material/expansion'
 import { MatButtonModule } from '@angular/material/button'
 
-import { MatDivider } from '@angular/material/divider'
+import { MatDividerModule } from '@angular/material/divider'
 import { PaymentMethodComponent } from '../payment-method/payment-method.component'
 import { MatCardModule } from '@angular/material/card'
 
@@ -47,7 +47,8 @@ library.add(faCartArrowDown, faGift, faHeart, faLeanpub, faThumbsUp, faTshirt, f
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss'],
-  imports: [MatCardModule, PaymentMethodComponent, MatDivider, TranslateModule, MatButtonModule, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription, MatFormFieldModule, MatLabel, MatHint, MatInputModule, FormsModule, ReactiveFormsModule, MatError, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, PaymentMethodComponent, MatDividerModule, TranslateModule, MatButtonModule, MatExpansionModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatIconModule]
 })
 export class PaymentComponent implements OnInit {
   private readonly location = inject(Location)
@@ -124,29 +125,24 @@ export class PaymentComponent implements OnInit {
   }
 
   initTotal () {
-    this.activatedRoute.paramMap.subscribe({
-      next: (paramMap: ParamMap) => {
-        this.mode = paramMap.get('entity')
-        if (this.mode === 'wallet') {
-          this.totalPrice = parseFloat(sessionStorage.getItem('walletTotal'))
-        } else if (this.mode === 'deluxe') {
-          this.userService.deluxeStatus().subscribe({
-            next: (res) => {
-              this.totalPrice = res.membershipCost
-            },
-            error: (err) => { console.log(err) }
-          })
-        } else {
-          const itemTotal = parseFloat(sessionStorage.getItem('itemTotal'))
-          const promotionalDiscount = sessionStorage.getItem('couponDiscount') ? (parseFloat(sessionStorage.getItem('couponDiscount')) / 100) * itemTotal : 0
-          this.deliveryService.getById(sessionStorage.getItem('deliveryMethodId')).subscribe((method) => {
-            const deliveryPrice = method.price
-            this.totalPrice = itemTotal + deliveryPrice - promotionalDiscount
-          })
-        }
-      },
-      error: (err) => { console.log(err) }
-    })
+    this.mode = this.activatedRoute.snapshot.paramMap.get('entity')
+    if (this.mode === 'wallet') {
+      this.totalPrice = parseFloat(sessionStorage.getItem('walletTotal'))
+    } else if (this.mode === 'deluxe') {
+      this.userService.deluxeStatus().subscribe({
+        next: (res) => {
+          this.totalPrice = res.membershipCost
+        },
+        error: (err) => { console.log(err) }
+      })
+    } else {
+      const itemTotal = parseFloat(sessionStorage.getItem('itemTotal'))
+      const promotionalDiscount = sessionStorage.getItem('couponDiscount') ? (parseFloat(sessionStorage.getItem('couponDiscount')) / 100) * itemTotal : 0
+      this.deliveryService.getById(sessionStorage.getItem('deliveryMethodId')).subscribe((method) => {
+        const deliveryPrice = method.price
+        this.totalPrice = itemTotal + deliveryPrice - promotionalDiscount
+      })
+    }
   }
 
   applyCoupon () {

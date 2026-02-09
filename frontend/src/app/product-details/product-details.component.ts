@@ -7,7 +7,7 @@ import { ProductReviewEditComponent } from '../product-review-edit/product-revie
 import { UserService } from '../Services/user.service'
 import { ProductReviewService } from '../Services/product-review.service'
 import { Component, type OnDestroy, type OnInit, inject } from '@angular/core'
-import { MAT_DIALOG_DATA, MatDialog, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faArrowCircleLeft, faCrown, faPaperPlane, faThumbsUp, faUserEdit } from '@fortawesome/free-solid-svg-icons'
 import { UntypedFormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -16,13 +16,13 @@ import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 import { type Review } from '../Models/review.model'
 import { type Product } from '../Models/product.model'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatHint } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
-import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion'
-import { MatButtonModule, MatIconButton } from '@angular/material/button'
-import { MatDivider } from '@angular/material/divider'
-import { MatTooltip } from '@angular/material/tooltip'
+import { MatExpansionModule } from '@angular/material/expansion'
+import { MatButtonModule } from '@angular/material/button'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatTooltipModule } from '@angular/material/tooltip'
 import { AsyncPipe } from '@angular/common'
 
 library.add(faPaperPlane, faArrowCircleLeft, faUserEdit, faThumbsUp, faCrown)
@@ -31,7 +31,8 @@ library.add(faPaperPlane, faArrowCircleLeft, faUserEdit, faThumbsUp, faCrown)
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss'],
-  imports: [MatDialogContent, MatTooltip, MatDivider, MatButtonModule, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, TranslateModule, MatIconButton, MatIconModule, MatFormFieldModule, MatLabel, MatHint, MatInputModule, FormsModule, ReactiveFormsModule, MatDialogActions, MatDialogClose, AsyncPipe]
+  standalone: true,
+  imports: [MatDialogModule, MatTooltipModule, MatDividerModule, MatButtonModule, MatExpansionModule, TranslateModule, MatIconModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, AsyncPipe]
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog)

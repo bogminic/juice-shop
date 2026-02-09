@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { ProductService } from '../Services/product.service'
 import { BasketService } from '../Services/basket.service'
 import { type AfterViewInit, Component, NgZone, type OnDestroy, ViewChild, ChangeDetectorRef, inject } from '@angular/core'
-import { MatPaginator } from '@angular/material/paginator'
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator'
 import { forkJoin, type Subscription } from 'rxjs'
 import { MatTableDataSource } from '@angular/material/table'
 import { MatDialog } from '@angular/material/dialog'
@@ -23,11 +23,11 @@ import { faCartPlus, faEye } from '@fortawesome/free-solid-svg-icons'
 import { type Product } from '../Models/product.model'
 import { QuantityService } from '../Services/quantity.service'
 import { DeluxeGuard } from '../app.guard'
-import { MatDivider } from '@angular/material/divider'
+import { MatDividerModule } from '@angular/material/divider'
 import { MatButtonModule } from '@angular/material/button'
-import { MatTooltip } from '@angular/material/tooltip'
-import { MatCardModule, MatCardImage, MatCardTitle, MatCardContent } from '@angular/material/card'
-import { MatGridList, MatGridTile } from '@angular/material/grid-list'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { MatCardModule } from '@angular/material/card'
+import { MatGridListModule } from '@angular/material/grid-list'
 import { AsyncPipe } from '@angular/common'
 
 library.add(faEye, faCartPlus)
@@ -46,7 +46,8 @@ interface TableEntry {
   selector: 'app-search-result',
   templateUrl: './search-result.component.html',
   styleUrls: ['./search-result.component.scss'],
-  imports: [MatGridList, MatGridTile, MatCardModule, TranslateModule, MatTooltip, MatCardImage, MatButtonModule, MatCardTitle, MatCardContent, MatDivider, MatPaginator, AsyncPipe]
+  standalone: true,
+  imports: [MatGridListModule, MatCardModule, TranslateModule, MatTooltipModule, MatButtonModule, MatDividerModule, MatPaginatorModule, AsyncPipe]
 })
 export class SearchResultComponent implements OnDestroy, AfterViewInit {
   private readonly deluxeGuard = inject(DeluxeGuard)

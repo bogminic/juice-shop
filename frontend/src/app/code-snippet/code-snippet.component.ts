@@ -10,12 +10,12 @@ import { ChallengeService } from '../Services/challenge.service'
 import { VulnLinesService, type result } from '../Services/vuln-lines.service'
 import { Component, type OnInit, inject } from '@angular/core'
 
-import { MAT_DIALOG_DATA, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog'
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog'
 import { UntypedFormControl, FormsModule } from '@angular/forms'
 import { type ThemePalette } from '@angular/material/core'
 import { MatButtonModule } from '@angular/material/button'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 
 import { MatCardModule } from '@angular/material/card'
 import { CodeFixesComponent } from '../code-fixes/code-fixes.component'
@@ -23,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { TranslateModule } from '@ngx-translate/core'
 import { CodeAreaComponent } from '../code-area/code-area.component'
 
-import { MatTabGroup, MatTab, MatTabLabel } from '@angular/material/tabs'
+import { MatTabsModule } from '@angular/material/tabs'
 
 enum ResultState {
   Undecided,
@@ -46,7 +46,8 @@ export interface RandomFixes {
   templateUrl: './code-snippet.component.html',
   styleUrls: ['./code-snippet.component.scss'],
   host: { class: 'code-snippet' },
-  imports: [MatDialogTitle, MatDialogContent, MatTabGroup, MatTab, CodeAreaComponent, TranslateModule, MatTabLabel, MatIconModule, CodeFixesComponent, MatDialogActions, MatCardModule, MatFormFieldModule, MatLabel, MatInputModule, FormsModule, MatButtonModule, MatDialogClose]
+  standalone: true,
+  imports: [MatDialogModule, MatTabsModule, CodeAreaComponent, TranslateModule, MatIconModule, CodeFixesComponent, MatCardModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule]
 })
 export class CodeSnippetComponent implements OnInit {
   dialogData = inject(MAT_DIALOG_DATA)

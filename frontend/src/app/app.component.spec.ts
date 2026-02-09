@@ -76,7 +76,7 @@ describe('AppComponent', () => {
     fixture.detectChanges()
   })
 
-  it('should create the app', waitForAsync(() => {
+  it('should create the app', () => {
     expect(app).toBeTruthy()
-  }))
+  })
 })

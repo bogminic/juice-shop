@@ -18,14 +18,13 @@ import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { type SecurityQuestion } from '../Models/securityQuestion.model'
 import { MatButtonModule } from '@angular/material/button'
-import { MatOption } from '@angular/material/core'
-import { MatSelect } from '@angular/material/select'
+import { MatSelectModule } from '@angular/material/select'
 import { PasswordStrengthComponent } from '../password-strength/password-strength.component'
 import { PasswordStrengthInfoComponent } from '../password-strength-info/password-strength-info.component'
-import { MatSlideToggle } from '@angular/material/slide-toggle'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel, MatError, MatHint } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatCardModule } from '@angular/material/card'
 
 import { MatIconModule } from '@angular/material/icon'
@@ -36,7 +35,8 @@ library.add(faUserPlus, faExclamationCircle)
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatFormFieldModule, MatLabel, MatInputModule, FormsModule, ReactiveFormsModule, MatError, MatHint, MatSlideToggle, PasswordStrengthComponent, PasswordStrengthInfoComponent, MatSelect, MatOption, MatButtonModule, RouterLink, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatSlideToggleModule, PasswordStrengthComponent, PasswordStrengthInfoComponent, MatSelectModule, MatButtonModule, RouterLink, MatIconModule]
 })
 export class RegisterComponent implements OnInit {
   private readonly securityQuestionService = inject(SecurityQuestionService)

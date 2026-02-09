@@ -17,7 +17,7 @@ import {
 } from '@wagmi/core'
 import { FormsModule } from '@angular/forms'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card'
@@ -38,7 +38,8 @@ const BeeFaucetAddress = '0x860e3616aD0E0dEDc23352891f3E10C4131EA5BC'
   selector: 'app-faucet',
   templateUrl: './faucet.component.html',
   styleUrls: ['./faucet.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatButtonModule, MatFormFieldModule, MatLabel, MatInputModule, FormsModule, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule, MatIconModule]
 })
 export class FaucetComponent implements OnInit {
   private readonly keysService = inject(KeysService)

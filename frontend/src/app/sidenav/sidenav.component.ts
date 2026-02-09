@@ -14,20 +14,21 @@ import { CookieService } from 'ngy-cookie'
 import { ConfigurationService } from '../Services/configuration.service'
 import { LoginGuard } from '../app.guard'
 import { roles } from '../roles'
-import { MatDivider } from '@angular/material/divider'
+import { MatDividerModule } from '@angular/material/divider'
 import { MatIconModule } from '@angular/material/icon'
 import { NgClass } from '@angular/common'
 
 import { TranslateModule } from '@ngx-translate/core'
 import { MatButtonModule } from '@angular/material/button'
-import { MatNavList, MatListSubheaderCssMatStyler, MatListItem } from '@angular/material/list'
-import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar'
+import { MatListModule } from '@angular/material/list'
+import { MatToolbarModule } from '@angular/material/toolbar'
 
 @Component({
   selector: 'sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.scss'],
-  imports: [MatToolbar, MatToolbarRow, MatNavList, MatButtonModule, MatListSubheaderCssMatStyler, TranslateModule, MatListItem, RouterLink, MatIconModule, NgClass, MatDivider]
+  standalone: true,
+  imports: [MatToolbarModule, MatListModule, MatButtonModule, TranslateModule, RouterLink, MatIconModule, NgClass, MatDividerModule]
 })
 export class SidenavComponent implements OnInit {
   private readonly administrationService = inject(AdministrationService)

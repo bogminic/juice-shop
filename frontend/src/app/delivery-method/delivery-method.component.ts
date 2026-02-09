@@ -6,7 +6,7 @@
 import { Component, NgZone, type OnInit, inject } from '@angular/core'
 import { DeliveryService } from '../Services/delivery.service'
 import { AddressService } from '../Services/address.service'
-import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table'
 import { Router } from '@angular/router'
 import { Location, NgClass } from '@angular/common'
 import { type DeliveryMethod } from '../Models/deliveryMethod.model'
@@ -16,9 +16,8 @@ import { SelectionModel } from '@angular/cdk/collections'
 import { MatIconModule } from '@angular/material/icon'
 import { MatButtonModule } from '@angular/material/button'
 
-import { MatRadioButton } from '@angular/material/radio'
-
-import { MatDivider } from '@angular/material/divider'
+import { MatRadioModule } from '@angular/material/radio'
+import { MatDividerModule } from '@angular/material/divider'
 import { TranslateModule } from '@ngx-translate/core'
 import { MatCardModule } from '@angular/material/card'
 
@@ -28,7 +27,8 @@ library.add(faRocket, faShippingFast, faTruck)
   selector: 'app-delivery-method',
   templateUrl: './delivery-method.component.html',
   styleUrls: ['./delivery-method.component.scss'],
-  imports: [MatCardModule, TranslateModule, MatDivider, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatRadioButton, NgClass, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatButtonModule, MatIconModule]
+  standalone: true,
+  imports: [MatCardModule, TranslateModule, MatDividerModule, MatTableModule, MatRadioModule, NgClass, MatButtonModule, MatIconModule]
 })
 export class DeliveryMethodComponent implements OnInit {
   private readonly location = inject(Location)

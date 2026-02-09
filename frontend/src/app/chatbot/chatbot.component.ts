@@ -13,7 +13,7 @@ import { FormSubmitService } from '../Services/form-submit.service'
 import { TranslateService, TranslateModule } from '@ngx-translate/core'
 import { CookieService } from 'ngy-cookie'
 import { MatInputModule } from '@angular/material/input'
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field'
 
 import { MatCardModule } from '@angular/material/card'
 
@@ -38,7 +38,8 @@ interface MessageActions {
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.scss'],
-  imports: [MatCardModule, MatFormFieldModule, MatLabel, TranslateModule, MatInputModule, FormsModule, ReactiveFormsModule]
+  standalone: true,
+  imports: [MatCardModule, MatFormFieldModule, TranslateModule, MatInputModule, FormsModule, ReactiveFormsModule]
 })
 export class ChatbotComponent implements OnInit, OnDestroy {
   private readonly userService = inject(UserService)
