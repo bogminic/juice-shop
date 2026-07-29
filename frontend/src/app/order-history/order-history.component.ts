@@ -7,7 +7,7 @@ import { Component, NgZone, type OnInit, inject, ChangeDetectionStrategy } from 
 import { OrderHistoryService } from '../Services/order-history.service'
 import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table'
 import { BasketService } from '../Services/basket.service'
-import { ProductDetailsComponent } from '../product-details/product-details.component'
+import { ProductReviewsComponent } from '../product-reviews/product-reviews.component'
 import { MatDialog } from '@angular/material/dialog'
 import { type Product } from '../Models/product.model'
 import { ProductService } from '../Services/product.service'
@@ -99,7 +99,7 @@ export class OrderHistoryComponent implements OnInit {
           deluxePrice: product.deluxePrice,
           points: Math.round(product.price / 10)
         }
-        this.dialog.open(ProductDetailsComponent, {
+        this.dialog.open(ProductReviewsComponent, {
           width: '500px',
           height: 'max-content',
           data: {

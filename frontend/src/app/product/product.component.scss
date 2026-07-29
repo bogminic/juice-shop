@@ -5,6 +5,13 @@
 
 @use './../../styles/variables' as *;
 
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+}
+
 .mat-card {
   border: 0;
   border-radius: 0;

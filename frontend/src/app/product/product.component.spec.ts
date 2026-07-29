@@ -10,7 +10,7 @@ import { of, throwError } from 'rxjs'
 import { provideZoneChangeDetection } from '@angular/core'
 
 import { ProductComponent } from './product.component'
-import { ProductDetailsComponent } from '../product-details/product-details.component'
+import { ProductReviewsComponent } from '../product-reviews/product-reviews.component'
 import { type Product, type ProductTableEntry } from '../Models/product.model'
 import { ProductService } from '../Services/product.service'
 import { BasketService } from '../Services/basket.service'
@@ -86,7 +86,7 @@ describe('ProductComponent', () => {
 
     it('should open a modal dialog with product details', () => {
         component.showDetail({ id: 42 } as Product)
-        expect(dialog.open).toHaveBeenCalledWith(ProductDetailsComponent, {
+        expect(dialog.open).toHaveBeenCalledWith(ProductReviewsComponent, {
             width: '500px',
             height: 'max-content',
             data: {

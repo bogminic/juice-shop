@@ -19,33 +19,36 @@
         <span>{{ "LABEL_SOLD_OUT" | translate }}</span>
       </aside>
     }
-    <section
+    <a
+      [routerLink]="['/product', product.id]"
+      class="product-link"
       matTooltipTouchGestures="off"
-      tabindex="0"
-      (keydown.enter)="showDetail(product)"
-      role="button"
-      (click)="showDetail(product)"
-      aria-label="Click for more information about the product"
       matTooltip="Click for more information"
       matTooltipPosition="above"
     >
-      <div
-        class="image-container"
-        [style.background-image]="
-          'url(\'assets/public/images/products/' + product.image + '\')'
-        "
+      <section
+        tabindex="0"
+        role="link"
+        aria-label="Click for more information about the product"
       >
-        <img
-          mat-card-image
-          [src]="'assets/public/images/products/' + product.image"
-          alt="{{ product.name }}"
-          class="img-thumbnail"
-        />
-      </div>
-      <div class="info-box">
-        <div class="name">{{ product.name }}</div>
-      </div>
-    </section>
+        <div
+          class="image-container"
+          [style.background-image]="
+            'url(\'assets/public/images/products/' + product.image + '\')'
+          "
+        >
+          <img
+            mat-card-image
+            [src]="'assets/public/images/products/' + product.image"
+            alt="{{ product.name }}"
+            class="img-thumbnail"
+          />
+        </div>
+        <div class="info-box">
+          <div class="name">{{ product.name }}</div>
+        </div>
+      </section>
+    </a>
     <footer class="footer">
        <div class="price">
           @if (!isDeluxe() || product.price === product.deluxePrice) {

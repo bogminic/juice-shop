@@ -19,7 +19,7 @@ import { throwError } from 'rxjs/internal/observable/throwError'
 import { OrderHistoryService } from '../Services/order-history.service'
 import { OrderHistoryComponent } from './order-history.component'
 import { type Product } from '../Models/product.model'
-import { ProductDetailsComponent } from '../product-details/product-details.component'
+import { ProductReviewsComponent } from '../product-reviews/product-reviews.component'
 import { MatIconModule } from '@angular/material/icon'
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
@@ -124,7 +124,7 @@ describe('AccountingComponent', () => {
         productService.get.mockReturnValue(of({ id: 42, name: 'A', description: 'B', image: 'C', price: 10 } as Product))
         component.showDetail(42)
         expect(productService.get).toHaveBeenCalled()
-        expect(dialog.open).toHaveBeenCalledWith(ProductDetailsComponent, {
+        expect(dialog.open).toHaveBeenCalledWith(ProductReviewsComponent, {
             width: '500px',
             height: 'max-content',
             data: {

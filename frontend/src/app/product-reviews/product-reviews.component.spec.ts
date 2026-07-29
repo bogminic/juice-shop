@@ -21,16 +21,16 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { MatIconModule } from '@angular/material/icon'
 import { MatExpansionModule } from '@angular/material/expansion'
 
-import { ProductDetailsComponent } from './product-details.component'
+import { ProductReviewsComponent } from './product-reviews.component'
 import { of, throwError } from 'rxjs'
 import { ReactiveFormsModule } from '@angular/forms'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { type Product } from '../Models/product.model'
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
-describe('ProductDetailsComponent', () => {
-    let component: ProductDetailsComponent
-    let fixture: ComponentFixture<ProductDetailsComponent>
+describe('ProductReviewsComponent', () => {
+    let component: ProductReviewsComponent
+    let fixture: ComponentFixture<ProductReviewsComponent>
     let userService: any
     let productReviewService: any
     let dialog: any
@@ -68,7 +68,7 @@ describe('ProductDetailsComponent', () => {
                 MatTooltipModule,
                 MatExpansionModule,
                 MatSnackBarModule,
-                ProductDetailsComponent],
+                ProductReviewsComponent],
             providers: [
                 { provide: UserService, useValue: userService },
                 { provide: ProductReviewService, useValue: productReviewService },
@@ -83,7 +83,7 @@ describe('ProductDetailsComponent', () => {
     })
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProductDetailsComponent)
+        fixture = TestBed.createComponent(ProductReviewsComponent)
         component = fixture.componentInstance
         fixture.autoDetectChanges()
     })

@@ -73,6 +73,11 @@ const loadAboutComponent = async () => {
   return module.AboutComponent
 }
 
+const loadProductDetailsComponent = async () => {
+  const module = await import('./product-details/product-details.component')
+  return module.ProductDetailsComponent
+}
+
 // vuln-code-snippet start adminSectionChallenge scoreBoardChallenge web3SandboxChallenge
 const routes: Routes = [
   { // vuln-code-snippet neutral-line adminSectionChallenge
@@ -177,6 +182,10 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchResultComponent
+  },
+  {
+    path: 'product/:id',
+    loadComponent: async () => await loadProductDetailsComponent()
   },
   {
     path: 'hacking-instructor',

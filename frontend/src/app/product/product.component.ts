@@ -14,13 +14,12 @@ import { MatCardModule } from '@angular/material/card'
 import { MatTooltip } from '@angular/material/tooltip'
 import { MatButton } from '@angular/material/button'
 import { MatIcon } from '@angular/material/icon'
-import { ProductDetailsComponent } from '../product-details/product-details.component'
-import { MatDialog } from '@angular/material/dialog'
+import { RouterLink } from '@angular/router'
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Eager,
   selector: 'app-product',
-  imports: [TranslateModule, MatCardModule, MatTooltip, MatButton, MatIcon],
+  imports: [TranslateModule, MatCardModule, MatTooltip, MatButton, MatIcon, RouterLink],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss'
 })
@@ -29,12 +28,11 @@ export class ProductComponent {
   private readonly productService = inject(ProductService)
   private readonly translateService = inject(TranslateService)
   private readonly snackBarHelperService = inject(SnackBarHelperService)
-  private readonly dialog = inject(MatDialog)
-
 
   item = input.required<ProductTableEntry>()
   isLoggedIn = input.required<boolean>()
   isDeluxe = input.required<boolean>()
+  compact = input(false)
 
   addToBasket(id?: number) {
     if (id == null) {
@@ -175,16 +173,6 @@ export class ProductComponent {
       },
       error: (err) => {
         console.log(err)
-      }
-    })
-  }
-
-  showDetail(product: Product) {
-    this.dialog.open(ProductDetailsComponent, {
-      width: '500px',
-      height: 'max-content',
-      data: {
-        productData: product
       }
     })
   }
